@@ -1,3 +1,5 @@
+import 'package:animate_do/animate_do.dart';
+
 import '/core/helpers/extensions.dart';
 import '/core/helpers/sizer.dart';
 import '/core/helpers/spacing.dart';
@@ -40,22 +42,18 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            Image.asset(
-              AssetsManager.logoIMG,
-            ),
-            const Spacer(),
-            CircularProgressIndicator(
-              color: ColorManager.blackColor.toMaterialColor(),
-            ),
-            verticalSpace(40.h),
-            Text(
-              StringManager.splashScreenText.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: StyleManager.font16Regular(
-                color: ColorManager.primaryColor
+            FadeInDownBig(
+              child: Image.asset(
+                AssetsManager.logoIMG,
               ),
             ),
-            verticalSpace(40.h),
+            const Spacer(),
+            FadeInUp(
+              child: CircularProgressIndicator(
+                color: ColorManager.primaryColor.toMaterialColor(),
+              ),
+            ),
+            verticalSpace(40.h)
           ],
         ),
       ),

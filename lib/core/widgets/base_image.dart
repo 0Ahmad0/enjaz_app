@@ -15,8 +15,8 @@ class BaseImage extends StatelessWidget {
       width: width,
 
       // loadingBuilder:(context,widget, imageChunkEvent)=>widget,
-      frameBuilder:(context,widget,i,a)=>i!=null?widget:Image.asset(AssetsManager.providerIMG,width: width,height: height,fit: fit,),
-      errorBuilder:(context,_,__)=>Image.asset(AssetsManager.providerIMG,width: width,height: height,fit: fit,),
+      // frameBuilder:(context,widget,i,a)=>i!=null?widget:Image.asset(AssetsManager.providerIMG,width: width,height: height,fit: fit,),
+      // errorBuilder:(context,_,__)=>Image.asset(AssetsManager.providerIMG,width: width,height: height,fit: fit,),
     );
   }
 }

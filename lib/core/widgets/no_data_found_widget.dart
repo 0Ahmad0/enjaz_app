@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class NoDataFoundWidget extends StatelessWidget {
   const NoDataFoundWidget({
     super.key,
-    this.image = AssetsManager.noMessagesIMG,
+    this.image = '',
     this.text = '',
     this.resultCount,
   });

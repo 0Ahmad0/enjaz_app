@@ -43,7 +43,7 @@ class AppTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final TextInputType keyboardType;
   final TextEditingController? controller;
-  final IconData? iconData;
+  final String? iconData;
   final String? iconDataImage;
   final String? hintText;
   final Color? hintColor;
@@ -100,24 +100,27 @@ class _AppTextFieldState extends State<AppTextField> {
           filled: true,
           fillColor: ColorManager.grayColor,
           errorMaxLines: 2,
-          suffixIcon: widget.iconData != null
-              ? Icon(
-                  widget.iconData,
-                  size: 24.sp,
+          suffixIcon: widget.suffixIcon
+              ? IconButton(
+              onPressed: () {
+                showPassword();
+              },
+              icon: Icon(
+                !widget.obscureText
+                    ? Icons.remove_red_eye
+                    : Icons.visibility_off_sharp,
+                color: ColorManager.hintTextColor,
+              )):null,
+          prefixIcon: widget.iconData != null
+              ? Padding(
+                padding: EdgeInsets.all(12.sp),
+                child: SvgPicture.asset(
+                    widget.iconData!,
+                    width: 20.sp,
+                    height: 20.sp,
                   color: ColorManager.hintTextColor,
-                )
-              : widget.suffixIcon
-                  ? IconButton(
-                      onPressed: () {
-                        showPassword();
-                      },
-                      icon: Icon(
-                        !widget.obscureText
-                            ? Icons.remove_red_eye
-                            : Icons.visibility_off_sharp,
-                        color: ColorManager.hintTextColor,
-                      ))
-                  : null,
+                  ),
+              ):null,
           hintText: widget.hintText,
           hintStyle: StyleManager.font16Regular(
             color: ColorManager.hintTextColor,

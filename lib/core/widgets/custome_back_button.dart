@@ -15,7 +15,7 @@ class CustomBackButton extends StatelessWidget {
           context.pop();
         }
       },
-      icon: SvgPicture.asset(AssetsManager.arrowRightIcon),
+      icon: Icon(Icons.arrow_back_ios_new),
     );
   }
 }

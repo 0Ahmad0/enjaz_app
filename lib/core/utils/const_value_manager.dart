@@ -21,7 +21,7 @@ class ConstValueManager {
 
 
   /// Button Size
-  static const double heightButtonSize = 50;
+  static const double heightButtonSize = 56;
 
   /// Length  Appointments TabBar
   static const int lengthAppointmentsTabBar = 3;

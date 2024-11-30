@@ -10,6 +10,7 @@ class StringManager {
   static const String unCorrectPassword = "UnCorrect Password";
   static const String loginText = 'Login';
   static const String signUpText = 'Signup';
+  static const String createAccountNowText = 'Create Account Now';
   static const String submitText = 'Submit';
   static const String continueToPaymentText = 'Continue To Payment';
   static const String updateAppointmentText = 'Update Appointment';
@@ -47,8 +48,8 @@ class StringManager {
   static const String loginToYourAccountText = 'Login to your account';
   static const String enterEmailHintText = 'Enter Email';
   static const String enterPasswordHintText = 'Password';
-  static const String forgotPasswordLoginText = 'Forgot Password ? ';
-  static const String doNotHaveAnAccountText = 'Don\'t have an account ? ';
+  static const String forgotPasswordLoginText = 'Forgot the password ? ';
+  static const String doNotHaveAnAccountText = 'Don\'t Have An Account ? ';
 
   ///Signup Screen
   static const String createAccountText = 'Create an account';

@@ -1,3 +1,4 @@
+import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -27,11 +28,11 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   late List s;
-  late AuthController authController;
+  // late AuthController authController;
 
   @override
   void initState() {
-    authController.init();
+    // authController.init();
     s = ConstValueManager.conditionPasswordList;
     Future.delayed(Duration(seconds: 2), () {
       passwordController.addListener(() {
@@ -56,37 +57,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child: AppPaddingWidget(
             child: Form(
-              key: authController.formKey,
+              // key: authController.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  verticalSpace(20.h),
-                  Text(
-                    StringManager.createAccountText,
-                    style: StyleManager.font24Medium(),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      AssetsManager.logoIMG,
+                      width: 150.w,
+                      height: 150.h,
+                    ),
                   ),
-                  verticalSpace(40.h),
+                  verticalSpace(20.h),
                   AppTextField(
-                    iconData: Icons.person_outline,
-                    controller: authController.nameController,
-                    validator: (value) =>
-                        authController.validateFullName(value ?? ''),
+                    // iconData: AssetsManager.usernameIcon,
+                    // controller: authController.nameController,
+                    // validator: (value) =>
+                    //     authController.validateFullName(value ?? ''),
                     hintText: StringManager.enterNameHintText,
                   ),
                   verticalSpace(20.h),
                   AppTextField(
-                    iconData: Icons.email_outlined,
-                    controller: authController.emailController,
-                    validator: (value) =>
-                        authController.validateEmail(value ?? ''),
+                    // iconData: AssetsManager.usernameIcon,
+                    // controller: authController.emailController,
+                    // validator: (value) =>
+                    //     authController.validateEmail(value ?? ''),
                     hintText: StringManager.enterEmailHintText,
                   ),
                   verticalSpace(20.h),
                   AppTextField(
-                    iconData: Icons.call_outlined,
-                    controller: authController.phoneController,
-                    validator: (value) =>
-                        authController.validatePhoneNumber(value ?? ''),
+                    // iconData: AssetsManager.usernameIcon,
+                    // controller: authController.phoneController,
+                    // validator: (value) =>
+                    //     authController.validatePhoneNumber(value ?? ''),
                     hintText: StringManager.enterPhoneHintText,
                   ),
                   verticalSpace(20.h),
@@ -156,9 +160,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   AppTextField(
                     obscureText: true,
                     suffixIcon: true,
-                    controller: authController.confirmPasswordController,
-                    validator: (value) =>
-                        authController.validatePassword(value ?? ''),
+                    // controller: authController.confirmPasswordController,
+                    // validator: (value) =>
+                    //     authController.validatePassword(value ?? ''),
                     hintText: StringManager.enterConfirmPasswordHintText,
                   ),
                   verticalSpace(10.h),
@@ -169,11 +173,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   verticalSpace(20.h),
                   AppButton(
                     onPressed: () {
-                      if (authController.formKey.currentState!.validate() &&
-                          ConstValueManager.conditionPasswordList
-                              .every((element) => element.isValidate)) {
+                      // if (authController.formKey.currentState!.validate() &&
+                      //     ConstValueManager.conditionPasswordList
+                      //         .every((element) => element.isValidate)) {
                         // authController.signUp(context);
-                      }
+                      // }
                     },
                     text: StringManager.signUpText,
                   ),

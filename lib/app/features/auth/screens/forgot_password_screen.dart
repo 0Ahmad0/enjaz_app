@@ -1,3 +1,4 @@
+import '../../../../core/utils/assets_manager.dart';
 import '/core/helpers/extensions.dart';
 import '/core/routing/routes.dart';
 import '/core/widgets/app_button.dart';
@@ -66,7 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     return null;
                   },
                   hintText: StringManager.enterEmailHintText,
-                  iconData: Icons.email_outlined,
+                  iconData: AssetsManager.usernameIcon,
                 ),
               ),
               verticalSpace(40.h),
