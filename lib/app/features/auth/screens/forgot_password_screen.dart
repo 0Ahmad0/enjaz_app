@@ -1,3 +1,5 @@
+import 'package:animate_do/animate_do.dart';
+
 import '../../../../core/utils/assets_manager.dart';
 import '/core/helpers/extensions.dart';
 import '/core/routing/routes.dart';
@@ -39,46 +41,48 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
       body: SingleChildScrollView(
         child: AppPaddingWidget(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              verticalSpace(20.h),
-              Text(
-                StringManager.forgotPasswordText,
-                style: StyleManager.font24Medium(),
-              ),
-              verticalSpace(10.h),
-              Text(
-                StringManager.pleaseEnterValidEmailText,
-                textAlign: TextAlign.start,
-              ),
-              verticalSpace(40.h),
-              Form(
-                key: formKey,
-                child: AppTextField(
-                  controller: emailController,
-                  validator: (value){
-                    if(value!.trim().isEmpty){
-                      return StringManager.requiredField;
-                    }
-                    if(!value.isEmail){
-                      return StringManager.pleaseEnterValidEmailText;
-                    }
-                    return null;
-                  },
-                  hintText: StringManager.enterEmailHintText,
-                  iconData: AssetsManager.usernameIcon,
+          child: FadeInRight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpace(20.h),
+                Text(
+                  StringManager.forgotPasswordText,
+                  style: StyleManager.font24Medium(),
                 ),
-              ),
-              verticalSpace(40.h),
-              AppButton(onPressed: (){
-                if(formKey.currentState!.validate()){
-                context.pushReplacement(Routes.checkYourInboxRoute);
-
-                }
-              }, text: StringManager.submitText)
-
-            ],
+                verticalSpace(10.h),
+                Text(
+                  StringManager.pleaseEnterValidEmailText,
+                  textAlign: TextAlign.start,
+                ),
+                verticalSpace(40.h),
+                Form(
+                  key: formKey,
+                  child: AppTextField(
+                    controller: emailController,
+                    validator: (value){
+                      if(value!.trim().isEmpty){
+                        return StringManager.requiredField;
+                      }
+                      if(!value.isEmail){
+                        return StringManager.pleaseEnterValidEmailText;
+                      }
+                      return null;
+                    },
+                    hintText: StringManager.enterEmailHintText,
+                    iconData: AssetsManager.usernameIcon,
+                  ),
+                ),
+                verticalSpace(40.h),
+                AppButton(onPressed: (){
+                  if(formKey.currentState!.validate()){
+                  context.pushReplacement(Routes.checkYourInboxRoute);
+            
+                  }
+                }, text: StringManager.submitText)
+            
+              ],
+            ),
           ),
         ),
       ),

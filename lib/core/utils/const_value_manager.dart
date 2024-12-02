@@ -211,6 +211,19 @@ class ConstValueManager {
   };
   static List<NavbarItem> navBarList = [
 
+    NavbarItem(
+        route: Text(''),
+        icon: Icons.support_agent
+        , label: 'Support'),
+
+    NavbarItem(
+        route: Text(''),
+        icon: Icons.storage
+        , label: 'T-Support'),
+    NavbarItem(
+        route: Text(''),
+        icon: Icons.message_outlined
+        , label: 'Chat'),
   ];
 
   static List<ConditionPasswordItem> conditionPasswordList = [

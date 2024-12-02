@@ -1,5 +1,6 @@
 import 'package:enjaz_app/app/features/auth/screens/login_screen.dart';
 import 'package:enjaz_app/app/features/auth/screens/sign_up_screen.dart';
+import 'package:enjaz_app/app/features/navbar/screens/navbar_screen.dart';
 import 'package:enjaz_app/app/features/splash/splash_screen.dart';
 import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class EnjazApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: SplashScreen(),
+            home: NavbarScreen(),
             // initialRoute: Routes.initialRoute,
             onGenerateRoute: appRouter.generateRoute,
             routes: {},

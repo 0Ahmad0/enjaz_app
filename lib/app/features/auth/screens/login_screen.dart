@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
 
 import '../controller/auth_controller.dart';
@@ -28,85 +29,87 @@ class LoginScreen extends StatelessWidget {
         child: AppPaddingWidget(
           child: Form(
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpace(20.h),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      AssetsManager.logoIMG,
-                      width: 200.w,
-                      height: 200.h,
-                    ),
-                  ),
-                  verticalSpace(60.h),
-                  AppTextField(
-                    iconData: AssetsManager.usernameIcon,
-                    // controller:  authController.emailController,
-                    hintText: StringManager.enterEmailHintText,
-                    // validator: (value)=>authController.validateEmail(value??'')
-                  ),
-                  verticalSpace(20.h),
-                  AppTextField(
-                    // controller: authController.passwordController,
-                    obscureText: true,
-                    suffixIcon: true,
-                    iconData: AssetsManager.lockIcon,
-                    // validator: (value)=>authController.validatePassword(value??''),
-                    hintText: StringManager.enterPasswordHintText,
-                  ),
-                  verticalSpace(20.h),
-                  AppButton(
-                    onPressed: () {
-                      // Seeder.serviceProvider();
-                      // context.pushReplacement(Routes.navbarRoute);
-                      // if (authController.formKey.currentState!.validate()) {
-                      // authController.login(context);
-                      // }
-                    },
-                    text: StringManager.loginText,
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero
+              child: FadeInLeft(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    verticalSpace(20.h),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        AssetsManager.logoIMG,
+                        width: 200.w,
+                        height: 200.h,
                       ),
+                    ),
+                    verticalSpace(60.h),
+                    AppTextField(
+                      iconData: AssetsManager.usernameIcon,
+                      // controller:  authController.emailController,
+                      hintText: StringManager.enterEmailHintText,
+                      // validator: (value)=>authController.validateEmail(value??'')
+                    ),
+                    verticalSpace(20.h),
+                    AppTextField(
+                      // controller: authController.passwordController,
+                      obscureText: true,
+                      suffixIcon: true,
+                      iconData: AssetsManager.lockIcon,
+                      // validator: (value)=>authController.validatePassword(value??''),
+                      hintText: StringManager.enterPasswordHintText,
+                    ),
+                    verticalSpace(20.h),
+                    AppButton(
                       onPressed: () {
-                        context.pushNamed(Routes.forgotPasswordRoute);
+                        // Seeder.serviceProvider();
+                        // context.pushReplacement(Routes.navbarRoute);
+                        // if (authController.formKey.currentState!.validate()) {
+                        // authController.login(context);
+                        // }
                       },
-                      child: Text(
-                        StringManager.forgotPasswordLoginText,
-                        style: StyleManager.font14Regular(),
+                      text: StringManager.loginText,
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero
+                        ),
+                        onPressed: () {
+                          context.pushNamed(Routes.forgotPasswordRoute);
+                        },
+                        child: Text(
+                          StringManager.forgotPasswordLoginText,
+                          style: StyleManager.font14Regular(),
+                        ),
                       ),
                     ),
-                  ),
-                  verticalSpace(220.h),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text.rich(
-                      TextSpan(children: [
-                        TextSpan(
-                          text: StringManager.doNotHaveAnAccountText + " ",
-                          style: StyleManager.font14Bold(
-                            color: ColorManager.blackColor,
-                          ),
-                        ),
-                        TextSpan(
-                            text: StringManager.createAccountNowText,
-                            style: StyleManager.font14Regular(
-                              color: ColorManager.blueColor,
+                    verticalSpace(220.h),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text.rich(
+                        TextSpan(children: [
+                          TextSpan(
+                            text: StringManager.doNotHaveAnAccountText + " ",
+                            style: StyleManager.font14Bold(
+                              color: ColorManager.blackColor,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                context.pushReplacement(Routes.signUpRoute);
-                              }),
-                      ]),
-                    ),
-                  )
-
-                ],
+                          ),
+                          TextSpan(
+                              text: StringManager.createAccountNowText,
+                              style: StyleManager.font14Regular(
+                                color: ColorManager.blueColor,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  context.pushReplacement(Routes.signUpRoute);
+                                }),
+                        ]),
+                      ),
+                    )
+                
+                  ],
+                ),
               ),
             ),
           ),

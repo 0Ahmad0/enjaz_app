@@ -1,6 +1,14 @@
 class StringManager {
   /// Global
   static const String appName = "ENJAZ";
+  static const String yourJobText = "Your Job";
+  static const String selectTheTypeText = "Select the type";
+  static const String passwordText = "Password";
+  static const String confirmPasswordText = "Confirm password";
+  static const String enterHereToTypeText = "Enter here to type";
+  static const String chooseStrongPasswordText = "Choose strong password";
+  static const String rewritePasswordAgainText = "Rewrite password again";
+
   static const String signUpHtmlData = """
   <span style='font-size: 12px'>
   By clicking Sign Up, you agree to our <b>Terms and Conditions</b> and <b>Privacy Policy</b>.
