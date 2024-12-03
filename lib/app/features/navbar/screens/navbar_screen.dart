@@ -1,4 +1,7 @@
+import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/const_value_manager.dart';
@@ -33,7 +36,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
         items: ConstValueManager.navBarList
             .map(
               (e) => BottomNavigationBarItem(
-                icon: Icon(e.icon),
+                icon: SvgPicture.asset(e.icon,
+                width: 30.sp,
+                  height: 30.sp,
+                ),
                 label: e.label,
                 tooltip: e.label,
               ),

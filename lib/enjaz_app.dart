@@ -44,7 +44,9 @@ class EnjazApp extends StatelessWidget {
                 centerTitle: true,
                 titleTextStyle: StyleManager.font18Medium(),
                 backgroundColor: ColorManager.whiteColor,
-                elevation: 0.0,
+                shadowColor: ColorManager.whiteColor,
+                surfaceTintColor: ColorManager.whiteColor,
+                elevation: 1.0,
               ),
               tabBarTheme: TabBarTheme(
                 labelColor: ColorManager.whiteColor,

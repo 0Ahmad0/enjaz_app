@@ -9,6 +9,12 @@ class AssetsManager {
   ///<==== Svg ====>
   static const usernameIcon = '$_pathSVGs/username.svg';
   static const lockIcon = '$_pathSVGs/lock.svg';
+  static const  supportIcon = '$_pathSVGs/support.svg';
+  static const  projectProgressIcon = '$_pathSVGs/project_progress.svg';
+  static const  messageSendButtonIcon = '$_pathSVGs/message_send_button.svg';
+  static const  checkReadMessageIcon = '$_pathSVGs/check_read_message.svg';
+  static const  chatSquareIcon = '$_pathSVGs/chat_square.svg';
+  static const  chatIcon = '$_pathSVGs/chat.svg';
 
   ///<==== Json ====>
 

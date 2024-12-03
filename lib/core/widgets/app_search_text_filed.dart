@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 var _borderTextFiled = ({Color color = ColorManager.primaryColor}) =>
     OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.circular(100.r),
         borderSide: BorderSide(color: color));
 
 class AppSearchTextFiled extends StatelessWidget {
@@ -24,33 +24,23 @@ class AppSearchTextFiled extends StatelessWidget {
   final String? Function(String?)? onSubmitted;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            color: ColorManager.shadowColor,
-            spreadRadius: 2.sp,
-            blurRadius: 10.sp,
-            offset: Offset(2.sp, 0))
-      ]),
-      child: TextField(
-
-        onSubmitted: onSubmitted,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: 12.w
-          ),
-          hintText: hintText,
-          prefixIcon: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: onPressed,
-          ),
-          border: _borderTextFiled(),
-          enabledBorder: _borderTextFiled(color: Colors.transparent),
-          focusedBorder: _borderTextFiled(color: Colors.transparent),
-          filled: true,
-          fillColor: ColorManager.grayColor,
+    return TextField(
+      onSubmitted: onSubmitted,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12.w
         ),
+        hintText: hintText,
+        prefixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: onPressed,
+        ),
+        border: _borderTextFiled(color: ColorManager.grayColor),
+        enabledBorder: _borderTextFiled(color: ColorManager.hintTextColor),
+        focusedBorder: _borderTextFiled(color: Colors.transparent),
+        filled: true,
+        fillColor: ColorManager.grayColor,
       ),
     );
   }

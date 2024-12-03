@@ -1,11 +1,12 @@
-
+import '../../app/features/navbar/screens/chat_screen.dart';
+import '../../app/features/navbar/screens/project_progress_screen.dart';
+import '../../app/features/navbar/screens/support_screen.dart';
 import '/core/helpers/get_color_status_appointments.dart';
 import '/core/routing/routes.dart';
 import '/core/utils/assets_manager.dart';
 import '/core/utils/string_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class ConstValueManager {
   /// Design Size
@@ -18,7 +19,6 @@ class ConstValueManager {
   static const int delayedSplash = 3;
 
   static const String geminiApi = "AIzaSyCDePmxP17rWSPSa_o-420-53dpMxYyZa8";
-
 
   /// Button Size
   static const double heightButtonSize = 56;
@@ -210,20 +210,10 @@ class ConstValueManager {
     """
   };
   static List<NavbarItem> navBarList = [
-
     NavbarItem(
-        route: Text(''),
-        icon: Icons.support_agent
-        , label: 'Support'),
-
-    NavbarItem(
-        route: Text(''),
-        icon: Icons.storage
-        , label: 'T-Support'),
-    NavbarItem(
-        route: Text(''),
-        icon: Icons.message_outlined
-        , label: 'Chat'),
+        route: SupportScreen(), icon: AssetsManager.supportIcon, label: 'Support'),
+    NavbarItem(route: ProjectProgressScreen(), icon: AssetsManager.projectProgressIcon, label: 'T-Support'),
+    NavbarItem(route: ChatScreen(), icon: AssetsManager.chatIcon, label: 'Chat'),
   ];
 
   static List<ConditionPasswordItem> conditionPasswordList = [
@@ -232,7 +222,6 @@ class ConstValueManager {
     ConditionPasswordItem(text: StringManager.condition3Text),
     ConditionPasswordItem(text: StringManager.condition4Text),
   ];
-
 }
 
 class ConditionPasswordItem {
@@ -245,7 +234,7 @@ class ConditionPasswordItem {
 class NavbarItem {
   final Widget route;
   final String label;
-  final IconData icon;
+  final String icon;
 
   NavbarItem({required this.route, required this.icon, required this.label});
 }
