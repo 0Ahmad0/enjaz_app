@@ -61,6 +61,7 @@ class LoginScreen extends StatelessWidget {
                     verticalSpace(20.h),
                     AppButton(
                       onPressed: () {
+                        context.pushReplacement(Routes.navbarRoute);
                         // Seeder.serviceProvider();
                         // context.pushReplacement(Routes.navbarRoute);
                         // if (authController.formKey.currentState!.validate()) {

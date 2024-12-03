@@ -91,8 +91,8 @@ class EnjazApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: NavbarScreen(),
-            // initialRoute: Routes.initialRoute,
+            // home: NavbarScreen(),
+            initialRoute: Routes.initialRoute,
             onGenerateRoute: appRouter.generateRoute,
             routes: {},
           );
