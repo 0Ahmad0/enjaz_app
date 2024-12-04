@@ -39,6 +39,22 @@ class ConstValueManager {
     'History'
   ];
 
+  static List<String> technicalSupportAskedQuestionList=[
+    'Project Management',
+    'Technical Issues',
+    'Account Updates'
+  ];
+
+  static List<String> contactOptionList = [
+    'Live Chat',
+    'Send Email',
+    'Call Us'
+  ];
+  static List<String> rateList = [
+    StringManager.satisfiedText,
+    StringManager.notSatisfiedText,
+  ];
+
   static const Map aboutUsMapText = {
     "text":
         "Car Consultant is your go-to solution for all car-related needs. We connect car owners with automotive consultants to diagnose vehicle issues and schedule appointments with trusted service providers for repairs and maintenance. Our platform offers expert advice and easy booking, ensuring a seamless, transparent, and reliable car care experience. We're here to simplify car ownership and keep your vehicle running smoothly."

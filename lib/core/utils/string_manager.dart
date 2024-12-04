@@ -10,6 +10,16 @@ class StringManager {
   static const String rewritePasswordAgainText = "Rewrite password again";
   static const String chatScreenText = "Chat";
   static const String searchProjectText = "Search project";
+  static const String technicalSupportText = "Technical Support";
+  static const String frequentlyAskedQuestionText = "Frequently Asked Question";
+  static const String contactOptionText = "Contact Option";
+  static const String reportAnIssueText = "Report An Issue";
+  static const String selectTheIssueText = "Select The Issue";
+  static const String describeTheIssueText = "Describe The Issue";
+  static const String attachFilesText = "Attach Files";
+  static const String rateOurServiceText = "Rate Our Service";
+  static const String satisfiedText = "Satisfied  👍  ";
+  static const String notSatisfiedText = "Not Satisfied  👎  ";
 
   static const String signUpHtmlData = """
   <span style='font-size: 12px'>
