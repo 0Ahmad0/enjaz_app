@@ -1,4 +1,6 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/const_value_manager.dart';
@@ -7,6 +9,7 @@ import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/app_padding.dart';
 import '../../../../core/widgets/app_search_text_filed.dart';
 import '../widgets/progress_project_item_widget.dart';
@@ -25,7 +28,9 @@ class _ProjectProgressScreenState extends State<ProjectProgressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.pushNamed(Routes.createProjectRoute);
+        },
         child: Icon(Icons.add,),
       ),
       body: SafeArea(

@@ -4,6 +4,7 @@ import '../../app/features/auth/screens/check_inbox_screen.dart';
 import '../../app/features/auth/screens/forgot_password_screen.dart';
 import '../../app/features/auth/screens/login_screen.dart';
 import '../../app/features/auth/screens/sign_up_screen.dart';
+import '../../app/features/create_project/screens/create_project_screen.dart';
 import '../../app/features/messages/screens/messages_screen.dart';
 import '../../app/features/navbar/screens/navbar_screen.dart';
 import '../../app/features/splash/splash_screen.dart';
@@ -42,6 +43,10 @@ class AppRouter {
         case Routes.messagesRoute:
         return MaterialPageRoute(
           builder: (_) => MessagesScreen(),
+        );
+      case Routes.createProjectRoute:
+        return MaterialPageRoute(
+          builder: (_) => CreateProjectScreen(),
         );
 
       default:

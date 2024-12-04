@@ -20,6 +20,18 @@ class StringManager {
   static const String rateOurServiceText = "Rate Our Service";
   static const String satisfiedText = "Satisfied  👍  ";
   static const String notSatisfiedText = "Not Satisfied  👎  ";
+  static const String createProjectText = "Create Project";
+  static const String projectNameText = "Project Name";
+  static const String nameOfProjectText = "Name of project";
+  static const String projectPictureText = "Project Picture";
+  static const String projectDescriptionText = "Project Description";
+  static const String describeTheProjectText = "Describe the project";
+  static const String projectDateText = "Project Date";
+  static const String startDateText = "Start Date";
+  static const String endDateText = "End Date";
+  static const String saveText = "Save";
+  static const String addMembersText = "Add Members";
+  static const String addText = "Add";
 
   static const String signUpHtmlData = """
   <span style='font-size: 12px'>

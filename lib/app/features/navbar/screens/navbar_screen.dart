@@ -29,6 +29,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
     return Scaffold(
       body: ConstValueManager.navBarList[_currentIndex].route,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: ColorManager.whiteColor,
         currentIndex: _currentIndex,
         onTap:  _onTap,
         fixedColor: ColorManager.primaryColor,
