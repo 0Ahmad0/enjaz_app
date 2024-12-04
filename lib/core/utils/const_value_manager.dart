@@ -1,3 +1,5 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../../app/features/navbar/screens/chat_screen.dart';
 import '../../app/features/navbar/screens/project_progress_screen.dart';
 import '../../app/features/navbar/screens/support_screen.dart';
@@ -30,6 +32,12 @@ class ConstValueManager {
 
   static const String arLanguageCode = 'ar';
   static const String enLanguageCode = 'en';
+
+  static List<String> projectStatusList = [
+    'Active',
+    'Completed',
+    'History'
+  ];
 
   static const Map aboutUsMapText = {
     "text":
@@ -211,9 +219,20 @@ class ConstValueManager {
   };
   static List<NavbarItem> navBarList = [
     NavbarItem(
-        route: SupportScreen(), icon: AssetsManager.supportIcon, label: 'Support'),
-    NavbarItem(route: ProjectProgressScreen(), icon: AssetsManager.projectProgressIcon, label: 'T-Support'),
-    NavbarItem(route: ChatScreen(), icon: AssetsManager.chatIcon, label: 'Chat'),
+      route: SupportScreen(),
+      icon: FontAwesomeIcons.headphones,
+      label: 'Support',
+    ),
+    NavbarItem(
+      route: ProjectProgressScreen(),
+      icon: Icons.incomplete_circle_outlined,
+      label: 'T-Support',
+    ),
+    NavbarItem(
+      route: ChatScreen(),
+      icon: Icons.chat,
+      label: 'Chat',
+    ),
   ];
 
   static List<ConditionPasswordItem> conditionPasswordList = [
@@ -234,7 +253,7 @@ class ConditionPasswordItem {
 class NavbarItem {
   final Widget route;
   final String label;
-  final String icon;
+  final IconData icon;
 
   NavbarItem({required this.route, required this.icon, required this.label});
 }

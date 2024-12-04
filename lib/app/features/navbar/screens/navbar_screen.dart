@@ -1,7 +1,9 @@
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
+import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/const_value_manager.dart';
@@ -32,14 +34,12 @@ class _NavbarScreenState extends State<NavbarScreen> {
         fixedColor: ColorManager.primaryColor,
         elevation: 0.0,
         unselectedItemColor: ColorManager.unselectedItemColor,
-        type: BottomNavigationBarType.shifting,
+        // type: BottomNavigationBarType.shifting,
+        selectedLabelStyle: StyleManager.font12Regular(),
         items: ConstValueManager.navBarList
             .map(
               (e) => BottomNavigationBarItem(
-                icon: SvgPicture.asset(e.icon,
-                width: 30.sp,
-                  height: 30.sp,
-                ),
+                icon: Icon(e.icon),
                 label: e.label,
                 tooltip: e.label,
               ),

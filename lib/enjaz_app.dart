@@ -75,7 +75,7 @@ class EnjazApp extends StatelessWidget {
                 ),
               ),
               floatingActionButtonTheme: FloatingActionButtonThemeData(
-                  backgroundColor: ColorManager.primaryColor,
+                  backgroundColor: ColorManager.grayColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100.r),
                   )),

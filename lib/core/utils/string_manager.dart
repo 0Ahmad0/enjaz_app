@@ -9,6 +9,7 @@ class StringManager {
   static const String chooseStrongPasswordText = "Choose strong password";
   static const String rewritePasswordAgainText = "Rewrite password again";
   static const String chatScreenText = "Chat";
+  static const String searchProjectText = "Search project";
 
   static const String signUpHtmlData = """
   <span style='font-size: 12px'>

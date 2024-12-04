@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:enjaz_app/app/features/navbar/widgets/chat_item_widget.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/widgets/app_padding.dart';
@@ -13,7 +14,6 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(StringManager.chatScreenText),
-        leading: CustomBackButton(),
         actions: [
           IconButton(
             onPressed: () {},
@@ -21,16 +21,18 @@ class ChatScreen extends StatelessWidget {
           )
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: AppPaddingWidget(child: AppSearchTextFiled()),
-          ),
-          SliverList.builder(
-              itemBuilder: (context,index)=>ChatItemWidget(),
-            itemCount: 5,
-          )
-        ],
+      body: FadeInLeft(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: AppPaddingWidget(child: AppSearchTextFiled()),
+            ),
+            SliverList.builder(
+                itemBuilder: (context,index)=>ChatItemWidget(),
+              itemCount: 5,
+            )
+          ],
+        ),
       ),
     );
   }

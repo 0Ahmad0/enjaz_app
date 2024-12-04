@@ -1,5 +1,8 @@
+import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
+import 'package:enjaz_app/core/routing/routes.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:enjaz_app/core/widgets/app_padding.dart';
@@ -13,7 +16,9 @@ class ChatItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        context.pushNamed(Routes.messagesRoute);
+      },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

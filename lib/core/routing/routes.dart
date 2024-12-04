@@ -5,5 +5,6 @@ class Routes {
   static const String forgotPasswordRoute = '/forgetPasswordScreen';
   static const String checkYourInboxRoute = '/checkYourInboxScreen';
   static const String navbarRoute = '/navbarScreen';
+  static const String messagesRoute = '/messagesScreen';
 
 }

@@ -54,6 +54,7 @@ dependencies:
   percent_indicator:
   url_launcher:
   flutter_html:
+  font_awesome_flutter:
 
 dev_dependencies:
   flutter_test:
