@@ -83,7 +83,7 @@ class AppTextFiledWithEdit extends StatelessWidget {
           ),
           prefixIcon: icon == null?null:Icon(icon??null),
           hintText: hintText,
-          hintStyle: StyleManager.font16Regular(
+          hintStyle: StyleManager.font14Regular(
             color: ColorManager.hintTextColor,
           )
       ),

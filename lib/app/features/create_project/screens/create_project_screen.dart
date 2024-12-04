@@ -166,7 +166,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                       Row(
                         children: [
                           SizedBox(
-                            width: 50.w,
+                            width: 56.w,
                             height: 28.h,
                             child: Stack(
                               children: List.generate(

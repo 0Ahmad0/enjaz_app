@@ -16,6 +16,7 @@ class AssetsManager {
   static const  chatSquareIcon = '$_pathSVGs/chat_square.svg';
   static const  chatIcon = '$_pathSVGs/chat.svg';
   static const  uploadPictureIcon = '$_pathSVGs/upload_picture.svg';
+  static const  fileDownloadIcon = '$_pathSVGs/file_download.svg';
   static const  dateIcon = '$_pathSVGs/date.svg';
 
   ///<==== Json ====>

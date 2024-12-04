@@ -1,3 +1,8 @@
+import 'package:enjaz_app/app/features/project_details/screens/assets_screen.dart';
+import 'package:enjaz_app/app/features/project_details/screens/details_screen.dart';
+import 'package:enjaz_app/app/features/project_details/screens/location_screen.dart';
+import 'package:enjaz_app/app/features/project_details/screens/reports_screen.dart';
+import 'package:enjaz_app/app/features/project_details/screens/weather_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../app/features/navbar/screens/chat_screen.dart';
@@ -33,13 +38,9 @@ class ConstValueManager {
   static const String arLanguageCode = 'ar';
   static const String enLanguageCode = 'en';
 
-  static List<String> projectStatusList = [
-    'Active',
-    'Completed',
-    'History'
-  ];
+  static List<String> projectStatusList = ['Active', 'Completed', 'History'];
 
-  static List<String> technicalSupportAskedQuestionList=[
+  static List<String> technicalSupportAskedQuestionList = [
     'Project Management',
     'Technical Issues',
     'Account Updates'
@@ -53,6 +54,101 @@ class ConstValueManager {
   static List<String> rateList = [
     StringManager.satisfiedText,
     StringManager.notSatisfiedText,
+  ];
+
+  static List<ProjectDetails> projectDetailsList = [
+    ProjectDetails(label: 'Reports', screen: ReportsScreen()),
+    ProjectDetails(label: 'Assets', screen: AssetsScreen()),
+    ProjectDetails(label: 'Location', screen: LocationScreen()),
+    ProjectDetails(label: 'Weather', screen: WeatherScreen()),
+    ProjectDetails(label: 'Details', screen: DetailsScreen()),
+  ];
+
+  static List<AssetsDetails> assetsList = [
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/OIP.NfPWVNIRbhF1qOZRX_svjAHaE8?rs=1&pid=ImgDetMain',
+      title: 'Iron',
+      quantity: '500 Ton',
+      cost: '800\$',
+      total: '2,400,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.57712e8b9d691e4119b4f0788bafa7c4?rik=ZO0VndJfOtHGqw&pid=ImgRaw&r=0',
+      title: 'Red Brick',
+      quantity: '300,000',
+      cost: '8\$',
+      total: '2,300,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.686de87e57eaef615c18632b65737540?rik=FNZ6y6moo7Kj%2bg&pid=ImgRaw&r=0',
+      title: 'Wood',
+      quantity: '100,000',
+      cost: '4\$',
+      total: '20,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/OIP.NfPWVNIRbhF1qOZRX_svjAHaE8?rs=1&pid=ImgDetMain',
+      title: 'Iron',
+      quantity: '500 Ton',
+      cost: '800\$',
+      total: '2,400,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.57712e8b9d691e4119b4f0788bafa7c4?rik=ZO0VndJfOtHGqw&pid=ImgRaw&r=0',
+      title: 'Red Brick',
+      quantity: '300,000',
+      cost: '8\$',
+      total: '2,300,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.686de87e57eaef615c18632b65737540?rik=FNZ6y6moo7Kj%2bg&pid=ImgRaw&r=0',
+      title: 'Wood',
+      quantity: '100,000',
+      cost: '4\$',
+      total: '20,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/OIP.NfPWVNIRbhF1qOZRX_svjAHaE8?rs=1&pid=ImgDetMain',
+      title: 'Iron',
+      quantity: '500 Ton',
+      cost: '800\$',
+      total: '2,400,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.57712e8b9d691e4119b4f0788bafa7c4?rik=ZO0VndJfOtHGqw&pid=ImgRaw&r=0',
+      title: 'Red Brick',
+      quantity: '300,000',
+      cost: '8\$',
+      total: '2,300,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.686de87e57eaef615c18632b65737540?rik=FNZ6y6moo7Kj%2bg&pid=ImgRaw&r=0',
+      title: 'Wood',
+      quantity: '100,000',
+      cost: '4\$',
+      total: '20,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/OIP.NfPWVNIRbhF1qOZRX_svjAHaE8?rs=1&pid=ImgDetMain',
+      title: 'Iron',
+      quantity: '500 Ton',
+      cost: '800\$',
+      total: '2,400,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.57712e8b9d691e4119b4f0788bafa7c4?rik=ZO0VndJfOtHGqw&pid=ImgRaw&r=0',
+      title: 'Red Brick',
+      quantity: '300,000',
+      cost: '8\$',
+      total: '2,300,000\$',
+    ),
+    AssetsDetails(
+      image: 'https://th.bing.com/th/id/R.686de87e57eaef615c18632b65737540?rik=FNZ6y6moo7Kj%2bg&pid=ImgRaw&r=0',
+      title: 'Wood',
+      quantity: '100,000',
+      cost: '4\$',
+      total: '20,000\$',
+    ),
   ];
 
   static const Map aboutUsMapText = {
@@ -272,4 +368,26 @@ class NavbarItem {
   final IconData icon;
 
   NavbarItem({required this.route, required this.icon, required this.label});
+}
+
+class ProjectDetails {
+  final String label;
+  final Widget screen;
+
+  ProjectDetails({required this.label, required this.screen});
+}
+
+class AssetsDetails {
+  final String image;
+  final String title;
+  final String quantity;
+  final String cost;
+  final String total;
+
+  AssetsDetails(
+      {required this.image,
+      required this.title,
+      required this.quantity,
+      required this.cost,
+      required this.total});
 }

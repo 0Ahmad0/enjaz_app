@@ -122,7 +122,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   ),
               ):null,
           hintText: widget.hintText,
-          hintStyle: StyleManager.font16Regular(
+          hintStyle: StyleManager.font14Regular(
             color: ColorManager.hintTextColor,
           )),
     );

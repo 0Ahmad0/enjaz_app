@@ -32,6 +32,15 @@ class StringManager {
   static const String saveText = "Save";
   static const String addMembersText = "Add Members";
   static const String addText = "Add";
+  static const String projectDetailsText = "Project Details";
+  static const String aiExpectationText = "(AI Expectation)";
+  static const String outOfDateText = "Out of Date";
+  static const String scanQrToGetMapText = "Scan the QR Code to Get the Map";
+  static const String orPressOnTheLinkText = "Or press on the link";
+  static const String hereText = "Here";
+  static const String quantityText = "Quantity";
+  static const String costText = "Cost";
+  static const String totalText = "Total";
 
   static const String signUpHtmlData = """
   <span style='font-size: 12px'>
@@ -180,7 +189,6 @@ class StringManager {
   static const String orderDetailsText = 'Order Details';
   static const String consultantText = 'Consultant';
   static const String appFeeText = 'App Fee';
-  static const String totalText = 'Total';
   static const String whenDoYouWantServiceText =
       'When do you Want the service?';
   static const String selectDateText = 'Select Date';

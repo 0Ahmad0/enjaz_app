@@ -1,3 +1,5 @@
+import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
@@ -5,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../../../../core/routing/routes.dart';
 
 class ProgressProjectItemWidget extends StatelessWidget {
   const ProgressProjectItemWidget({
@@ -42,8 +46,13 @@ class ProgressProjectItemWidget extends StatelessWidget {
                   dense: true,
                   isThreeLine: true,
                   contentPadding: EdgeInsets.zero,
-                  trailing: Icon(
-                    Icons.table_chart,
+                  trailing: InkWell(
+                    onTap: (){
+                      context.pushNamed(Routes.projectDetailsRoute);
+                    },
+                    child: Icon(
+                      Icons.table_chart,
+                    ),
                   ),
                   title: Text(
                     'VIP House Building',
@@ -71,7 +80,7 @@ class ProgressProjectItemWidget extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: 50.w,
+                      width: 56.w,
                       height: 28.h,
                       child: Stack(
                         children: List.generate(
