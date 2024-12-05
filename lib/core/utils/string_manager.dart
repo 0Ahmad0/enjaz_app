@@ -41,6 +41,7 @@ class StringManager {
   static const String quantityText = "Quantity";
   static const String costText = "Cost";
   static const String totalText = "Total";
+  static const String progressPictureText = "Progress Picture";
 
   static const String signUpHtmlData = """
   <span style='font-size: 12px'>

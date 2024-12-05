@@ -14,7 +14,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FadeIn(
+    return ZoomIn(
       child: AppPaddingWidget(
         child: SingleChildScrollView(
           child: Column(

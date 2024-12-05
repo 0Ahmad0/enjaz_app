@@ -8,5 +8,6 @@ class Routes {
   static const String messagesRoute = '/messagesScreen';
   static const String createProjectRoute = '/createProjectScreen';
   static const String projectDetailsRoute = '/projectDetailsScreen';
+  static const String progressPictureRoute = '/progressPictureScreen';
 
 }

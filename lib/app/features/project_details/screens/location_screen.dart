@@ -16,7 +16,7 @@ class LocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Bounce(
+    return ZoomIn(
       child: AppPaddingWidget(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

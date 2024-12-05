@@ -7,6 +7,7 @@ import '../../app/features/auth/screens/sign_up_screen.dart';
 import '../../app/features/create_project/screens/create_project_screen.dart';
 import '../../app/features/messages/screens/messages_screen.dart';
 import '../../app/features/navbar/screens/navbar_screen.dart';
+import '../../app/features/progress_pictures/screens/progress_picture_screen.dart';
 import '../../app/features/project_details/screens/project_details_screen.dart';
 import '../../app/features/splash/splash_screen.dart';
 import 'routes.dart';
@@ -52,6 +53,10 @@ class AppRouter {
         case Routes.projectDetailsRoute:
         return MaterialPageRoute(
           builder: (_) => ProjectDetailsScreen(),
+        );
+        case Routes.progressPictureRoute:
+        return MaterialPageRoute(
+          builder: (_) => ProgressPictureScreen(),
         );
 
       default:
