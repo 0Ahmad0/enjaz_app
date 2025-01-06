@@ -16,6 +16,9 @@ class PickProjectLocationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
+      onPopInvokedWithResult: (_,__){
+        print('object');
+      },
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         margin: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
