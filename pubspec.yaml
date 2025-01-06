@@ -59,6 +59,7 @@ dependencies:
   google_maps_flutter:
   flutter_spinkit:
   provider:
+  pdf_render:
 
 dev_dependencies:
   flutter_test:

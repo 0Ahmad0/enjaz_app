@@ -2,6 +2,7 @@ class StringManager {
   /// Global
   static const String appName = "ENJAZ";
   static const String yourJobText = "Your Job";
+  static const String pickLocationText = "Pick Location";
   static const String selectTheTypeText = "Select the type";
   static const String passwordText = "Password";
   static const String confirmPasswordText = "Confirm password";
@@ -33,6 +34,9 @@ class StringManager {
   static const String startDateText = "Start Date";
   static const String endDateText = "End Date";
   static const String saveText = "Save";
+  static const String projectLocationText = "Project Location";
+  static const String projectAssetsText = "Project Assets";
+  static const String projectLocationHintText = "Location of project";
   static const String addMembersText = "Add Members";
   static const String addText = "Add";
   static const String projectDetailsText = "Project Details";

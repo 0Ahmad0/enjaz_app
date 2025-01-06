@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
 import 'package:enjaz_app/app/features/create_project/widgets/add_members_widget.dart';
+import 'package:enjaz_app/app/features/create_project/widgets/pick_project_location_widget.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
@@ -31,6 +32,24 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
   final _endDateController = TextEditingController();
 
   File? _file;
+
+  List<File?> _files = [];
+
+  _pickMultipleFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.any,
+    );
+
+    if (result != null) {
+      _files = result.paths.map((path) => File(path!)).toList();
+      setState(() {});
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Please select atleast 1 file'),
+      ));
+    }
+  }
 
   _pickImage() async {
     ImagePicker picker = ImagePicker();
@@ -102,11 +121,16 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                                 ? SvgPicture.asset(
                                     AssetsManager.uploadPictureIcon)
                                 : Stack(
+                                    clipBehavior: Clip.none,
                                     children: [
-                                      Image.file(
-                                        File(_file!.path),
-                                        fit: BoxFit.cover,
-                                        width: double.infinity,
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(14.r),
+                                        child: Image.file(
+                                          File(_file!.path),
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                        ),
                                       ),
                                       IconButton(
                                         onPressed: () {
@@ -153,17 +177,14 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                           ),
                           onPressed: () {
                             showModalBottomSheet(
-                              showDragHandle: true,
+                                showDragHandle: true,
                                 enableDrag: true,
                                 isScrollControlled: true,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(14.r)
-                                  )
-                                ),
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(14.r))),
                                 context: context,
-                                builder: (_)=>AddMembersWidget()
-                            );
+                                builder: (_) => AddMembersWidget());
                           },
                           icon: Icon(
                             Icons.add,
@@ -206,17 +227,20 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             child: ListTile(
                               dense: true,
                               contentPadding: EdgeInsets.zero,
-                              title: Text('3 People',
+                              title: Text(
+                                '3 People',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: StyleManager.font12SemiBold(),),
-                              subtitle: Text('Ahmad , rahaf, khaled',
+                                style: StyleManager.font12SemiBold(),
+                              ),
+                              subtitle: Text(
+                                'Ahmad , rahaf, khaled',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: StyleManager.font10Regular(),),
+                                style: StyleManager.font10Regular(),
+                              ),
                             ),
                           )
-
                         ],
                       ),
                       verticalSpace(20.h),
@@ -302,7 +326,70 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      verticalSpace(20.h),
+                      Text(
+                        StringManager.projectLocationText,
+                        style: StyleManager.font14Bold(),
+                      ),
+                      verticalSpace(10.h),
+                      AppTextField(
+                        readOnly: true,
+                        onTap: () {
+                          showDialog(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (context) => PickProjectLocationWidget(),
+                          );
+                        },
+                        hintText: StringManager.projectLocationHintText,
+                      ),
+                      verticalSpace(20.h),
+                      Text(
+                        StringManager.projectAssetsText,
+                        style: StyleManager.font14Bold(),
+                      ),
+                      verticalSpace(10.h),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(12.r),
+                        onTap: () {
+                          _pickMultipleFile();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.w, vertical: 14.h),
+                          decoration: BoxDecoration(
+                            color: ColorManager.grayColor,
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                StringManager.attachFilesText,
+                                style: StyleManager.font14Regular(
+                                  color: ColorManager.hintTextColor,
+                                ),
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Visibility(
+                                      visible: _files.isNotEmpty,
+                                      child: Text(
+                                        '${_files.length} Images',
+                                        style: StyleManager.font12Regular(
+                                            color: ColorManager.blueColor),
+                                      )),
+                                  horizontalSpace(4.w),
+                                  Icon(
+                                    Icons.attach_file,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
