@@ -9,6 +9,9 @@ class StringManager {
   static const String chooseStrongPasswordText = "Choose strong password";
   static const String rewritePasswordAgainText = "Rewrite password again";
   static const String chatScreenText = "Chat";
+  static const String deleteConversationText = "delete conversation";
+  static const String allMembersText = "All members";
+
   static const String searchProjectText = "Search project";
   static const String technicalSupportText = "Technical Support";
   static const String frequentlyAskedQuestionText = "Frequently Asked Question";

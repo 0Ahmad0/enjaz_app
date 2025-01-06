@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
+import 'package:enjaz_app/app/features/create_project/widgets/add_members_widget.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
@@ -150,7 +151,20 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            showModalBottomSheet(
+                              showDragHandle: true,
+                                enableDrag: true,
+                                isScrollControlled: true,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(14.r)
+                                  )
+                                ),
+                                context: context,
+                                builder: (_)=>AddMembersWidget()
+                            );
+                          },
                           icon: Icon(
                             Icons.add,
                             size: 20.sp,

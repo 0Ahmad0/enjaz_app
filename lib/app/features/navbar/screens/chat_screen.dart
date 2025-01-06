@@ -1,5 +1,8 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
 import 'package:enjaz_app/app/features/navbar/widgets/chat_item_widget.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
+import 'package:enjaz_app/core/routing/routes.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/widgets/app_padding.dart';
 import 'package:enjaz_app/core/widgets/app_search_text_filed.dart';
@@ -16,7 +19,9 @@ class ChatScreen extends StatelessWidget {
         title: Text(StringManager.chatScreenText),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(Routes.allMembersRoute);
+            },
             icon: Icon(Icons.add),
           )
         ],

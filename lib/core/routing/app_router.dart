@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app/features/all_members/screens/all_members_screen.dart';
 import '../../app/features/auth/screens/check_inbox_screen.dart';
 import '../../app/features/auth/screens/forgot_password_screen.dart';
 import '../../app/features/auth/screens/login_screen.dart';
@@ -57,6 +58,10 @@ class AppRouter {
         case Routes.progressPictureRoute:
         return MaterialPageRoute(
           builder: (_) => ProgressPictureScreen(),
+        );
+        case Routes.allMembersRoute:
+        return MaterialPageRoute(
+          builder: (_) => AllMembersScreen(),
         );
 
       default:

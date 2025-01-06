@@ -1,8 +1,11 @@
+import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:enjaz_app/core/helpers/sizer.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
+import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:enjaz_app/core/widgets/app_padding.dart';
 import 'package:enjaz_app/core/widgets/custome_back_button.dart';
@@ -42,11 +45,19 @@ class _MessagesScreenState extends State<MessagesScreen> {
       appBar: AppBar(
         elevation: 0.0,
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.more_vert,
-              ))
+          PopupMenuButton(
+            icon: Icon(
+              Icons.more_vert,
+            ),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                onTap: (){
+                  context.pop();
+                },
+                child: Text(StringManager.deleteConversationText),
+              )
+            ],
+          ),
         ],
         leading: CustomBackButton(),
         titleSpacing: 0,
@@ -69,11 +80,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
         children: [
           _listMessages.isEmpty
               ? Flexible(
-                child: Center(
-                            child: Text("No Messages Yet!!😢",
-                            style: StyleManager.font14Bold(),),
-                          ),
-              )
+                  child: Center(
+                    child: Text(
+                      "No Messages Yet!!😢",
+                      style: StyleManager.font14Bold(),
+                    ),
+                  ),
+                )
               : Expanded(
                   child: ListView.builder(
                     padding:
@@ -100,12 +113,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   fillColor: ColorManager.grayColor,
                   suffixIcon: IconButton(
                     onPressed: () {
-                      if(_messageController.text.trim().isNotEmpty)
-                      _listMessages.add(_messageController.text);
+                      if (_messageController.text.trim().isNotEmpty)
+                        _listMessages.add(_messageController.text);
                       _messageController.clear();
-                      setState(() {
-
-                      });
+                      setState(() {});
                     },
                     icon: SvgPicture.asset(
                       AssetsManager.messageSendButtonIcon,

@@ -9,5 +9,6 @@ class Routes {
   static const String createProjectRoute = '/createProjectScreen';
   static const String projectDetailsRoute = '/projectDetailsScreen';
   static const String progressPictureRoute = '/progressPictureScreen';
+  static const String allMembersRoute = '/allMembersScreen';
 
 }
