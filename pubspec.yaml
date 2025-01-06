@@ -60,6 +60,8 @@ dependencies:
   flutter_spinkit:
   provider:
   pdf_render:
+  http:
+  flutter_cache_manager:
 
 dev_dependencies:
   flutter_test:

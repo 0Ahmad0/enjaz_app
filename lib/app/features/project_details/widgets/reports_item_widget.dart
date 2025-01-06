@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
@@ -5,10 +7,12 @@ import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'assets_details_box_widget.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 
 class ReportsItemWidget extends StatelessWidget {
   const ReportsItemWidget({
@@ -32,6 +36,28 @@ class ReportsItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r)),
       child: Column(
         children: [
+          // Container(
+          //   width: double.infinity,
+          //   height: 125.h,
+          //   decoration: BoxDecoration(
+          //     color: ColorManager.whiteColor,
+          //     borderRadius: BorderRadius.circular(8.r),
+          //   ),
+          //   child: ClipRRect(
+          //     borderRadius: BorderRadius.vertical(
+          //       top: Radius.circular(8.r)
+          //     ),
+          //     child: IgnorePointer(
+          //       ignoring: true,
+          //       child: PdfViewer.openAsset(
+          //         'assets/images/pdfCV.pdf',
+          //         params: PdfViewerParams(
+          //           pageDecoration: BoxDecoration()
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Container(
             width: double.infinity,
             height: 125.h,
@@ -40,12 +66,31 @@ class ReportsItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(8.r)
-              ),
-              child: Image.asset(
-                'assets/images/pdf.png',
-                fit: BoxFit.fill,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(8.r)),
+              child: IgnorePointer(
+                ignoring: true,
+                child: FutureBuilder<File>(
+                  future: DefaultCacheManager().getSingleFile(
+                      'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('خطأ: ${snapshot.error}'),
+                      );
+                    } else if (snapshot.hasData) {
+                      return PdfViewer.openFile(
+                        snapshot.data!.path,
+                        params: PdfViewerParams(
+                          pageDecoration: BoxDecoration()
+                        ),
+                      );
+                    } else {
+                      return const Center(child: Text('تعذر تحميل الملف.'));
+                    }
+                  },
+                ),
               ),
             ),
           ),

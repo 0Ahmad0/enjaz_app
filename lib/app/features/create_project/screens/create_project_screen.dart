@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:enjaz_app/app/features/all_members/screens/all_members_screen.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
 import 'package:enjaz_app/app/features/create_project/widgets/add_members_widget.dart';
 import 'package:enjaz_app/app/features/create_project/widgets/pick_project_location_widget.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
+import 'package:enjaz_app/core/routing/routes.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
@@ -344,52 +347,36 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                         },
                         hintText: StringManager.projectLocationHintText,
                       ),
-                      verticalSpace(20.h),
-                      Text(
-                        StringManager.projectAssetsText,
-                        style: StyleManager.font14Bold(),
-                      ),
                       verticalSpace(10.h),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(12.r),
-                        onTap: () {
-                          _pickMultipleFile();
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.w, vertical: 14.h),
-                          decoration: BoxDecoration(
-                            color: ColorManager.grayColor,
-                            borderRadius: BorderRadius.circular(12.r),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        dense: true,
+                        title: Text(
+                          StringManager.projectAssetsText,
+                          style: StyleManager.font14Bold(),
+                        ),
+                        trailing: TextButton.icon(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
                           ),
-                          child: Row(
-                            children: [
-                              Text(
-                                StringManager.attachFilesText,
-                                style: StyleManager.font14Regular(
-                                  color: ColorManager.hintTextColor,
-                                ),
-                              ),
-                              const Spacer(),
-                              Row(
-                                children: [
-                                  Visibility(
-                                      visible: _files.isNotEmpty,
-                                      child: Text(
-                                        '${_files.length} Images',
-                                        style: StyleManager.font12Regular(
-                                            color: ColorManager.blueColor),
-                                      )),
-                                  horizontalSpace(4.w),
-                                  Icon(
-                                    Icons.attach_file,
-                                  )
-                                ],
-                              )
-                            ],
+                          onPressed: () {
+                            context.pushNamed(
+                              Routes.projectAssetsListRoute
+                            );
+                          },
+                          icon: Icon(
+                            Icons.add,
+                            size: 20.sp,
+                            color: ColorManager.blueColor,
+                          ),
+                          label: Text(
+                            StringManager.addText,
+                            style: StyleManager.font14Bold(
+                                color: ColorManager.blueColor),
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),

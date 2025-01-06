@@ -4,19 +4,46 @@ import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
+import 'package:enjaz_app/core/widgets/app_button.dart';
+import 'package:enjaz_app/core/widgets/app_padding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PickProjectLocationWidget extends StatelessWidget {
+class PickProjectLocationWidget extends StatefulWidget {
   const PickProjectLocationWidget({super.key});
+
+  @override
+  State<PickProjectLocationWidget> createState() =>
+      _PickProjectLocationWidgetState();
+}
+
+class _PickProjectLocationWidgetState extends State<PickProjectLocationWidget> {
+  late GoogleMapController _mapController;
+  LatLng? _selectedLocation;
+
+  void _onMapTap(LatLng position) {
+    setState(() {
+      _selectedLocation = position;
+    });
+  }
+
+  void _confirmLocation() {
+    if (_selectedLocation != null) {
+      Navigator.pop(context, _selectedLocation);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('الرجاء اختيار موقع من الخريطة')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_,__){
+      onPopInvokedWithResult: (_, __) {
         print('object');
       },
       child: Container(
@@ -51,13 +78,39 @@ class PickProjectLocationWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                            30.0,
-                            35.235
-                        )),
-                  ))
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(24.7136, 46.6753),
+                            zoom: 10.0,
+                          ),
+                          onMapCreated: (controller) {
+                            _mapController = controller;
+                          },
+                          onTap: _onMapTap,
+                          markers: _selectedLocation != null
+                              ? {
+                                  Marker(
+                                    markerId: MarkerId('selected'),
+                                    position: _selectedLocation!,
+                                  ),
+                                }
+                              : {},
+                        ),
+                        Visibility(
+                          visible: _selectedLocation != null,
+                          child: AppPaddingWidget(
+                            child: AppButton(
+                                onPressed: _confirmLocation,
+                                text: StringManager.pickLocationText
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
               PositionedDirectional(

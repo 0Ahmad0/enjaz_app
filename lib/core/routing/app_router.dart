@@ -1,3 +1,5 @@
+import 'package:enjaz_app/app/features/add_project_assets/screens/add_project_assets_screen.dart';
+import 'package:enjaz_app/app/features/project_assets_list/screens/project_assets_list_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/features/all_members/screens/all_members_screen.dart';
@@ -10,6 +12,7 @@ import '../../app/features/messages/screens/messages_screen.dart';
 import '../../app/features/navbar/screens/navbar_screen.dart';
 import '../../app/features/progress_pictures/screens/progress_picture_screen.dart';
 import '../../app/features/project_details/screens/project_details_screen.dart';
+import '../../app/features/show_location_on_map/screens/show_location_on_map_screen.dart';
 import '../../app/features/splash/splash_screen.dart';
 import 'routes.dart';
 
@@ -62,6 +65,14 @@ class AppRouter {
         case Routes.allMembersRoute:
         return MaterialPageRoute(
           builder: (_) => AllMembersScreen(),
+        );
+      case Routes.addProjectAssetsRoute:
+        return MaterialPageRoute(
+          builder: (_) => AddProjectAssetsScreen(),
+        );
+        case Routes.projectAssetsListRoute:
+        return MaterialPageRoute(
+          builder: (_) => ProjectAssetsListScreen(),
         );
 
       default:

@@ -27,6 +27,16 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Visibility(
+        /// ToDO: Check The User Is Manager Project
+        visible: _currentIndex == 0,
+        child: FloatingActionButton(
+          onPressed: () {
+            //TODO : Here Upload New Report As File
+          },
+          child: Icon(Icons.add),
+        ),
+      ),
       appBar: AppBar(
         actions: [
           IconButton(

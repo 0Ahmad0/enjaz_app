@@ -10,5 +10,7 @@ class Routes {
   static const String projectDetailsRoute = '/projectDetailsScreen';
   static const String progressPictureRoute = '/progressPictureScreen';
   static const String allMembersRoute = '/allMembersScreen';
+  static const String addProjectAssetsRoute = '/addProjectAssetsScreen';
+  static const String projectAssetsListRoute = '/projectAssetsListScreen';
 
 }
