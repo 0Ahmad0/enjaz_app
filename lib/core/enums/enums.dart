@@ -33,3 +33,9 @@ enum TypeMessage{
   image,
   file, audio,
 }
+
+enum ProjectStatus{
+  inProgress,
+  canceled,
+  completed
+}

@@ -89,8 +89,10 @@ class _ProjectProgressScreenState extends State<ProjectProgressScreen> {
                 }),
               ),
               SliverList.builder(
-                itemBuilder: (context, index) => ProgressProjectItemWidget(),
-                itemCount: 5,
+                itemBuilder: (context, index) => ProgressProjectItemWidget(
+                  status: ConstValueManager.projectWithStatusList[index],
+                ),
+                itemCount: ConstValueManager.projectWithStatusList.length,
               )
             ],
           ),

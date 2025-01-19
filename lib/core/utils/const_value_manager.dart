@@ -1,13 +1,16 @@
+import 'package:enjaz_app/app/features/profile/screens/profile_screen.dart';
 import 'package:enjaz_app/app/features/project_details/screens/assets_screen.dart';
 import 'package:enjaz_app/app/features/project_details/screens/details_screen.dart';
 import 'package:enjaz_app/app/features/project_details/screens/location_screen.dart';
 import 'package:enjaz_app/app/features/project_details/screens/reports_screen.dart';
 import 'package:enjaz_app/app/features/project_details/screens/weather_screen.dart';
+import 'package:enjaz_app/app/features/setting/screens/setting_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../app/features/navbar/screens/chat_screen.dart';
 import '../../app/features/navbar/screens/project_progress_screen.dart';
 import '../../app/features/navbar/screens/support_screen.dart';
+import '../enums/enums.dart';
 import '/core/helpers/get_color_status_appointments.dart';
 import '/core/routing/routes.dart';
 import '/core/utils/assets_manager.dart';
@@ -331,20 +334,31 @@ class ConstValueManager {
   };
   static List<NavbarItem> navBarList = [
     NavbarItem(
-      route: SupportScreen(),
-      icon: FontAwesomeIcons.headphones,
-      label: 'Support',
+      route: SettingScreen(),
+      icon: Icons.settings,
+      label: 'Setting',
     ),
     NavbarItem(
       route: ProjectProgressScreen(),
       icon: Icons.incomplete_circle_outlined,
-      label: 'T-Support',
+      label: 'Projects',
     ),
     NavbarItem(
       route: ChatScreen(),
       icon: Icons.chat,
       label: 'Chat',
     ),
+  ];
+
+  static List<ProjectStatus> projectWithStatusList = [
+    ProjectStatus.inProgress,
+    ProjectStatus.completed,
+    ProjectStatus.inProgress,
+    ProjectStatus.completed,
+    ProjectStatus.canceled,
+    ProjectStatus.completed,
+    ProjectStatus.canceled,
+    ProjectStatus.inProgress,
   ];
 
   static List<ConditionPasswordItem> conditionPasswordList = [

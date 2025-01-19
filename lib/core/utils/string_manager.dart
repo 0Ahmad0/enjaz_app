@@ -1,6 +1,7 @@
 class StringManager {
   /// Global
   static const String appName = "ENJAZ";
+  static const String supportText = "Support";
   static const String yourJobText = "Your Job";
   static const String pickLocationText = "Pick Location";
   static const String selectTheTypeText = "Select the type";
