@@ -65,7 +65,7 @@ dependencies:
   flutter_downloader: ^1.11.8
   path_provider:
   permission_handler:
-  open_file:
+
 
 dev_dependencies:
   flutter_test:

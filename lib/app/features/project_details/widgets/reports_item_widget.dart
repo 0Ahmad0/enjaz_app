@@ -11,10 +11,10 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../core/helpers/launcher_helper.dart';
 import 'assets_details_box_widget.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
@@ -46,7 +46,6 @@ class _ReportsItemWidgetState extends State<ReportsItemWidget> {
     }
   }
 
-
   Future<String> getDownloadDirectory() async {
     final directory = await getExternalStorageDirectory();
     final path = '${directory!.path}/downloads';
@@ -63,24 +62,16 @@ class _ReportsItemWidgetState extends State<ReportsItemWidget> {
     //TODO: Fix This
     final saveDir = await getDownloadDirectory();
     final fileUrl = _pdfLink;
-    final fileName = 'pdfFromOpenFile.pdf';
     final taskId = await FlutterDownloader.enqueue(
-      url: fileUrl,
-      savedDir: saveDir,
-      showNotification: true,
-      openFileFromNotification: false,
-      saveInPublicStorage: true
-    );
-    final filePath = '$saveDir/$fileName';
-    openDownloadedFile(filePath);
+        url: fileUrl,
+        savedDir: saveDir,
+        showNotification: true,
+        openFileFromNotification: true,
+        saveInPublicStorage: true);
+    LauncherHelper.launchWebsite(context, _pdfLink);
+
     print('Download started with taskId: $taskId');
   }
-
-  Future<void> openDownloadedFile(String filePath) async {
-    final result = await OpenFile.open(filePath);
-    print('File open result: ${result.message}');
-  }
-
 
   @override
   Widget build(BuildContext context) {
