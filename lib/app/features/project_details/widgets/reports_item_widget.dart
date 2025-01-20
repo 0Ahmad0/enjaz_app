@@ -67,8 +67,9 @@ class _ReportsItemWidgetState extends State<ReportsItemWidget> {
         savedDir: saveDir,
         showNotification: true,
         openFileFromNotification: true,
-        saveInPublicStorage: true);
-    LauncherHelper.launchWebsite(context, _pdfLink);
+        saveInPublicStorage: true).whenComplete((){
+      LauncherHelper.launchWebsite(context, _pdfLink);
+    });
 
     print('Download started with taskId: $taskId');
   }
