@@ -1,3 +1,6 @@
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import '/enjaz_app.dart';
 import '/core/helpers/extensions.dart';
 import '/core/routing/app_router.dart';
@@ -10,8 +13,20 @@ import 'package:get_storage/get_storage.dart';
 import 'core/routing/routes.dart';
 import 'core/utils/const_value_manager.dart';
 
+Future<void> requestAllPermissions() async {
+  await [
+    Permission.notification,
+    Permission.storage,
+  ].request();
+}
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+      debug: true,
+      ignoreSsl: true
+  );
+  await requestAllPermissions();
+
 
   /// To Init Firebase
   // await Firebase.initializeApp();

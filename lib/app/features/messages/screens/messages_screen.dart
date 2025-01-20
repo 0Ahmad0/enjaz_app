@@ -9,11 +9,13 @@ import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:enjaz_app/core/widgets/app_padding.dart';
 import 'package:enjaz_app/core/widgets/custome_back_button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
+import '../widgets/file_widget.dart';
 import '../widgets/receiver_text_widget.dart';
 import '../widgets/sender_text_widget.dart';
 
@@ -94,7 +96,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     itemCount: _listMessages.length,
                     itemBuilder: (context, index) => index.isEven
                         ? SenderTextWidget(text: _listMessages[index])
-                        : ReceiverTextWidget(text: _listMessages[index]),
+                        :FileWidget()
+                        // :ReceiverTextWidget(text: _listMessages[index]),
                   ),
                 ),
           AppPaddingWidget(
@@ -123,7 +126,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     ),
                   ),
                   prefixIcon: IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final file = await
+                        FilePicker.platform.pickFiles();
+                        //ToDo : chose pdf and get file name
+                      },
                       icon: SvgPicture.asset(
                         AssetsManager.chatSquareIcon,
                       ))),

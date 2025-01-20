@@ -8,13 +8,16 @@ import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'assets_details_box_widget.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
-class ReportsItemWidget extends StatelessWidget {
+class ReportsItemWidget extends StatefulWidget {
   const ReportsItemWidget({
     super.key,
     required this.image,
@@ -25,6 +28,53 @@ class ReportsItemWidget extends StatelessWidget {
   final String image;
   final String name;
   final String date;
+
+  @override
+  State<ReportsItemWidget> createState() => _ReportsItemWidgetState();
+}
+
+class _ReportsItemWidgetState extends State<ReportsItemWidget> {
+  final _pdfLink =
+      'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
+  Future<void> requestPermissions() async {
+    var status = await Permission.storage.request();
+    if (status.isDenied) {
+      // الأذن تم رفضه
+      print('Permission Denied');
+    }
+  }
+
+
+  Future<String> getDownloadDirectory() async {
+    final directory = await getExternalStorageDirectory();
+    final path = '${directory!.path}/downloads';
+    final saveDir = Directory(path);
+
+    if (!await saveDir.exists()) {
+      await saveDir.create(recursive: true);
+    }
+
+    return saveDir.path;
+  }
+
+  Future<void> downloadFile() async {
+    final saveDir = await getDownloadDirectory();
+    final fileUrl = _pdfLink;
+    final taskId = await FlutterDownloader.enqueue(
+      url: fileUrl,
+      savedDir: saveDir,
+      showNotification: true,
+      openFileFromNotification: true,
+      saveInPublicStorage: true
+    );
+    print('Download started with taskId: $taskId');
+  }
+  @override
+  void initState() {
+    super.initState();
+    // requestPermissions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +120,7 @@ class ReportsItemWidget extends StatelessWidget {
               child: IgnorePointer(
                 ignoring: true,
                 child: FutureBuilder<File>(
-                  future: DefaultCacheManager().getSingleFile(
-                      'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'),
+                  future: DefaultCacheManager().getSingleFile(_pdfLink),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -82,9 +131,8 @@ class ReportsItemWidget extends StatelessWidget {
                     } else if (snapshot.hasData) {
                       return PdfViewer.openFile(
                         snapshot.data!.path,
-                        params: PdfViewerParams(
-                          pageDecoration: BoxDecoration()
-                        ),
+                        params:
+                            PdfViewerParams(pageDecoration: BoxDecoration()),
                       );
                     } else {
                       return const Center(child: Text('تعذر تحميل الملف.'));
@@ -98,19 +146,19 @@ class ReportsItemWidget extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             dense: true,
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(image),
+              backgroundImage: NetworkImage(widget.image),
             ),
             title: Text(
-              name,
+              widget.name,
               style: StyleManager.font14Bold(),
             ),
             subtitle: Text(
-              date,
+              widget.date,
               style: StyleManager.font12SemiBold(
                   color: ColorManager.hintTextColor),
             ),
             trailing: InkWell(
-                onTap: () {},
+                onTap: downloadFile,
                 child: SvgPicture.asset(
                   AssetsManager.fileDownloadIcon,
                   width: 30.w,

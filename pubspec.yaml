@@ -62,6 +62,9 @@ dependencies:
   pdf_render:
   http:
   flutter_cache_manager:
+  flutter_downloader: ^1.11.8
+  path_provider:
+  permission_handler:
 
 dev_dependencies:
   flutter_test:

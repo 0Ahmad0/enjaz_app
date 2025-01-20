@@ -67,40 +67,41 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             child: SizedBox(
               height: 40.h,
               child: ListView.separated(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => InkWell(
-                        borderRadius: BorderRadius.circular(100.r),
-                        onTap: () {
-                          setState(() {
-                            _currentIndex = index;
-                          });
-                        },
-                        child: AnimatedContainer(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20.w,
-                          ),
-                          decoration: BoxDecoration(
-                              color: _currentIndex == index
-                                  ? ColorManager.primaryColor
-                                  : ColorManager.grayColor,
-                              borderRadius: BorderRadius.circular(100.r)),
-                          duration: Duration(milliseconds: 300),
-                          child: Text(
-                            ConstValueManager.projectDetailsList[index].label,
-                            style: StyleManager.font12Regular(
-                              color: _currentIndex == index
-                                  ? ColorManager.whiteColor
-                                  : ColorManager.blackColor,
-                            ),
-                          ),
-                        ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                ),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => InkWell(
+                  borderRadius: BorderRadius.circular(100.r),
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                    ),
+                    decoration: BoxDecoration(
+                        color: _currentIndex == index
+                            ? ColorManager.primaryColor
+                            : ColorManager.grayColor,
+                        borderRadius: BorderRadius.circular(100.r)),
+                    duration: Duration(milliseconds: 300),
+                    child: Text(
+                      ConstValueManager.projectDetailsList[index].label,
+                      style: StyleManager.font12Regular(
+                        color: _currentIndex == index
+                            ? ColorManager.whiteColor
+                            : ColorManager.blackColor,
                       ),
-                  separatorBuilder: (_, __) => horizontalSpace(10.w),
-                  itemCount: ConstValueManager.projectDetailsList.length),
+                    ),
+                  ),
+                ),
+                separatorBuilder: (_, __) => horizontalSpace(10.w),
+                itemCount: ConstValueManager.projectDetailsList.length,
+              ),
             ),
           ),
           SliverFillRemaining(
