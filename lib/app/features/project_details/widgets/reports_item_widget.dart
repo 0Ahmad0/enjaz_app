@@ -11,6 +11,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -59,22 +60,27 @@ class _ReportsItemWidgetState extends State<ReportsItemWidget> {
   }
 
   Future<void> downloadFile() async {
+    //TODO: Fix This
     final saveDir = await getDownloadDirectory();
     final fileUrl = _pdfLink;
+    final fileName = 'pdfFromOpenFile.pdf';
     final taskId = await FlutterDownloader.enqueue(
       url: fileUrl,
       savedDir: saveDir,
       showNotification: true,
-      openFileFromNotification: true,
+      openFileFromNotification: false,
       saveInPublicStorage: true
     );
+    final filePath = '$saveDir/$fileName';
+    openDownloadedFile(filePath);
     print('Download started with taskId: $taskId');
   }
-  @override
-  void initState() {
-    super.initState();
-    // requestPermissions();
+
+  Future<void> openDownloadedFile(String filePath) async {
+    final result = await OpenFile.open(filePath);
+    print('File open result: ${result.message}');
   }
+
 
   @override
   Widget build(BuildContext context) {
