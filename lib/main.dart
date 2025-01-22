@@ -21,6 +21,14 @@ Future<void> requestAllPermissions() async {
 }
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  /// To Init Firebase
+  await Firebase.initializeApp();
+
+  /// To Fix Bug In Text Showing In Release Mode
+  await ScreenUtil.ensureScreenSize();
+
+
+  await GetStorage.init();
   await FlutterDownloader.initialize(
       debug: true,
       ignoreSsl: true
