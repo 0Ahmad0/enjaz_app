@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
 import 'package:enjaz_app/core/helpers/extensions.dart';
@@ -11,8 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../core/widgets/constants_widgets.dart';
+import 'package:http/http.dart' as http;
 class PickProjectLocationWidget extends StatefulWidget {
-  const PickProjectLocationWidget({super.key});
+  const PickProjectLocationWidget({super.key, this.confirmLocation});
+  final Function(LatLng? selectedLocation,String? address)? confirmLocation;
+
 
   @override
   State<PickProjectLocationWidget> createState() =>
@@ -22,15 +28,17 @@ class PickProjectLocationWidget extends StatefulWidget {
 class _PickProjectLocationWidgetState extends State<PickProjectLocationWidget> {
   late GoogleMapController _mapController;
   LatLng? _selectedLocation;
-
+  String? areaName;
   void _onMapTap(LatLng position) {
     setState(() {
       _selectedLocation = position;
     });
   }
 
-  void _confirmLocation() {
-    if (_selectedLocation != null) {
+  Future<void> _confirmLocation() async {
+    if (LatLng != null) {
+      await getAreaName(_selectedLocation?.latitude,_selectedLocation?.longitude);
+      widget.confirmLocation!=null? widget.confirmLocation!(_selectedLocation,areaName):"";
       Navigator.pop(context, _selectedLocation);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -38,6 +46,16 @@ class _PickProjectLocationWidgetState extends State<PickProjectLocationWidget> {
       );
     }
   }
+
+  // void _confirmLocation() {
+  //   if (_selectedLocation != null) {
+  //     Navigator.pop(context, _selectedLocation);
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('الرجاء اختيار موقع من الخريطة')),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -129,5 +147,32 @@ class _PickProjectLocationWidgetState extends State<PickProjectLocationWidget> {
         ),
       ),
     );
+  }
+  Future<void> getAreaName(double? latitude, double? longitude) async {
+    ConstantsWidgets.showLoading();
+
+    final url = Uri.parse(
+        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$latitude&lon=$longitude&zoom=18&addressdetails=1');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final address = data['address'];
+      final area = address['suburb'] ??
+          address['municipality'] ??
+          address['province'] ??
+          address['state'] ??
+          address['country'] ??
+          'غير معروف';
+      print(address);
+      setState(() {
+        areaName = area;
+      });
+    } else {
+      setState(() {
+        areaName = 'غير معروف';
+      });
+    }
+    ConstantsWidgets.closeDialog();
   }
 }

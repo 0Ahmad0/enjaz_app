@@ -41,7 +41,7 @@ class ConstValueManager {
   static const String arLanguageCode = 'ar';
   static const String enLanguageCode = 'en';
 
-  static List<String> projectStatusList = ['Active', 'Completed', 'History'];
+  static List<String> projectStatusList = ['Active', 'Completed', 'All'];
 
   static List<String> technicalSupportAskedQuestionList = [
     'Project Management',

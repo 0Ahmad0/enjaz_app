@@ -21,6 +21,8 @@ enum AdminAppointmentsStatus{
   Canceled,
 }
 
+
+
 enum TypeFile{
   text,
   image,

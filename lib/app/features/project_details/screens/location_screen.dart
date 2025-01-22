@@ -10,7 +10,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../create_project/controller/project_controller.dart';
 import '../../show_location_on_map/screens/show_location_on_map_screen.dart';
 
 class LocationScreen extends StatelessWidget {
@@ -18,6 +22,7 @@ class LocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final location= Get.put(ProjectController()).project?.location;
     return ZoomIn(
       child: AppPaddingWidget(
           child: Column(
@@ -33,11 +38,18 @@ class LocationScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      'assets/images/qr.png',
-                      width: double.infinity,
-                      height: 300.h,
+                    Center(
+                      child: QrImageView(data: "https://www.google.com/maps/search/?api=1&query=${location?.latitude??24.56},${location?.longitude??46.215}",
+                        version: QrVersions.auto,
+                        size: 300.h,
+                        gapless: true,
+                      ),
                     ),
+                    // Image.asset(
+                    //   'assets/images/qr.png',
+                    //   width: double.infinity,
+                    //   height: 300.h,
+                    // ),
                     verticalSpace(20.h),
                     Text(
                       StringManager.scanQrToGetMapText,
@@ -61,8 +73,8 @@ class LocationScreen extends StatelessWidget {
                                       MaterialPageRoute(
                                           builder: (_) =>
                                               showLocationOnMapScreen(
-                                                latitude: 24.56 ,
-                                                longitude:46.215,
+                                                latitude: location?.latitude??24.56 ,
+                                                longitude:location?.longitude??46.215,
                                               )));
                                 }),
                         ],

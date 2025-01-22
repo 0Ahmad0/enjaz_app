@@ -6,10 +6,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../../core/models/appointment.dart';
+import '../../../../../core/models/project_model.dart';
 import '../../../../../core/models/chat_model.dart';
 import '../../../../../core/models/message_model.dart';
 import '../../../../../core/models/notification_model.dart';
+import '../../../../../core/models/report.dart';
+import '../../../../../core/models/report_project.dart';
 import '../../../../../core/models/tool.dart';
 import '../../../../../core/models/user_model.dart';
 import '../../../../../core/utils/color_manager.dart';
@@ -90,35 +92,74 @@ class FirebaseFun {
     return result;
   }
 
-  // ///Tools
-  // static addTool( {required ToolModel tool}) async {
-  //   final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionTool)
-  //       .doc(tool.id)
-  //       .set(tool.toJson()).then(onValueAddTool).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
-  // static deleteTool( {required String idTool}) async {
-  //   final result =await FirebaseFirestore.instance
-  //       .collection(FirebaseConstants.collectionTool)
-  //       .doc(idTool)
-  //       .delete().then(onValueDeleteTool)
-  //       .catchError(onError);
-  //   return result;
-  // }
-  // static updateTool( {required ToolModel tool}) async {
-  //   final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionTool).doc(
-  //       tool.id
-  //   ).update(tool.toJson()).then(onValueUpdateTool).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
-  // static fetchToolsByIdUser({required String idUser})  async {
-  //   final result=await FirebaseFirestore.instance.collection(FirebaseConstants.collectionTool)
-  //       .where('idUser',isEqualTo: idUser)
-  //       .get()
-  //       .then((onValueFetchTools))
-  //       .catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
+  ///Report
+  static addReport( {required ReportModel report}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionReport)
+        .doc(report.id)
+        .set(report.toJson()).then(onValueAddReport).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static deleteReport( {required String idReport}) async {
+    final result =await FirebaseFirestore.instance
+        .collection(FirebaseConstants.collectionReport)
+        .doc(idReport)
+        .delete().then(onValueDeleteReport)
+        .catchError(onError);
+    return result;
+  }
+  static updateReport( {required ReportModel report}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionReport).doc(
+        report.id
+    ).update(report.toJson()).then(onValueUpdateReport).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static fetchReportsByIdUser({required String idUser})  async {
+    final result=await FirebaseFirestore.instance.collection(FirebaseConstants.collectionReport)
+        .where('idUser',isEqualTo: idUser)
+        .get()
+        .then((onValueFetchReports))
+        .catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+
+  ///Report
+  static addReportProject( {required ReportProject reportProject}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionReportProject)
+        .doc(reportProject.id)
+        .set(reportProject.toJson()).then(onValueAddReport).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+
+  ///Report
+  static addProject( {required ProjectModel project}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionProject)
+        .doc(project.id)
+        .set(project.toJson()).then(onValueAddProject).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static deleteProject( {required String idProject}) async {
+    final result =await FirebaseFirestore.instance
+        .collection(FirebaseConstants.collectionProject)
+        .doc(idProject)
+        .delete().then(onValueDeleteProject)
+        .catchError(onError);
+    return result;
+  }
+  static updateProject( {required ProjectModel project}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionProject).doc(
+        project.id
+    ).update(project.toJson()).then(onValueUpdateProject).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static fetchProjectsByIdUser({required String idUser})  async {
+    final result=await FirebaseFirestore.instance.collection(FirebaseConstants.collectionProject)
+        .where('idUser',isEqualTo: idUser)
+        .get()
+        .then((onValueFetchProjects))
+        .catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+
 
   ///Chat
   static addChat( {required Chat chat}) async {
@@ -324,34 +365,65 @@ class FirebaseFun {
 
 
 
-  static Future<Map<String,dynamic>>onValueAddTool(value) async{
+  static Future<Map<String,dynamic>>onValueAddReport(value) async{
     return {
       'status':true,
-      'message':'Tool successfully add',
+      'message':'Report successfully add',
       'body':{},//{'id':value.id}
     };
   }
-  static Future<Map<String,dynamic>>onValueUpdateTool(value) async{
+  static Future<Map<String,dynamic>>onValueUpdateReport(value) async{
     return {
       'status':true,
-      'message':'Tool successfully update',
+      'message':'Report successfully update',
       'body':{}
     };
   }
-  static Future<Map<String,dynamic>> onValueFetchTools(value) async{
+  static Future<Map<String,dynamic>> onValueFetchReports(value) async{
     return {
       'status':true,
-      'message':'Tools successfully fetch',
+      'message':'Reports successfully fetch',
       'body':value.docs
     };
   }
-  static Future<Map<String,dynamic>>onValueDeleteTool(value) async{
+  static Future<Map<String,dynamic>>onValueDeleteReport(value) async{
     return {
       'status':true,
-      'message':'Tool successfully delete',
+      'message':'Report successfully delete',
       'body':{}
     };
   }
+
+  static Future<Map<String,dynamic>>onValueAddProject(value) async{
+    return {
+      'status':true,
+      'message':'Project successfully add',
+      'body':{},//{'id':value.id}
+    };
+  }
+  static Future<Map<String,dynamic>>onValueUpdateProject(value) async{
+    return {
+      'status':true,
+      'message':'Project successfully update',
+      'body':{}
+    };
+  }
+  static Future<Map<String,dynamic>> onValueFetchProjects(value) async{
+    return {
+      'status':true,
+      'message':'Projects successfully fetch',
+      'body':value.docs
+    };
+  }
+  static Future<Map<String,dynamic>>onValueDeleteProject(value) async{
+    return {
+      'status':true,
+      'message':'Project successfully delete',
+      'body':{}
+    };
+  }
+
+
   static Future<Map<String, dynamic>> onValueUpdateRobotModel(value) async {
     return {
       'status': true,
@@ -527,15 +599,15 @@ class FirebaseFun {
         "تم جلب معلومات المستخدمين بنجاح";
         errorMessage = "Users successfully fetch";
         break;
-      case "Tool successfully add":
+      case "Report successfully add":
         errorMessage =
         "تمت إضافة مشكلة بنجاح";
         break;
-      case "Tool successfully update":
+      case "Report successfully update":
         errorMessage =
         "تم تحديث المشكلة بنجاح";
         break;
-      case "Tool successfully fetch":
+      case "Report successfully fetch":
         errorMessage =
         "تم جلب المشكلة بنجاح";
         break;
@@ -543,7 +615,7 @@ class FirebaseFun {
         errorMessage =
         "تم انشاء الحساب بنجاح";
         break;
-      case "Tool successfully delete":
+      case "Report successfully delete":
         errorMessage =
         "تم حذف المشكلة بنجاح";
         break;

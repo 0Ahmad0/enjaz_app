@@ -9,21 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AssetModel {
-  final String image;
-  final String name;
-  final String price;
-  final String quantity;
-  final String total;
+import '../../project_assets_list/screens/project_assets_list_screen.dart';
 
-  AssetModel({
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.quantity,
-    required this.total,
-  });
-}
+// class AssetModel {
+//   final String image;
+//   final String name;
+//   final String price;
+//   final String quantity;
+//   final String total;
+//
+//   AssetModel({
+//     required this.image,
+//     required this.name,
+//     required this.price,
+//     required this.quantity,
+//     required this.total,
+//   });
+// }
 
 
 
@@ -97,6 +99,7 @@ class _AddProjectAssetsScreenState extends State<AddProjectAssetsScreen> {
                     child: _selectedImage == null
                         ? Center(child: Text('Pick Picture'))
                         : Image.file(_selectedImage!, fit: BoxFit.cover),
+                        // : Image.file(_selectedImage!, fit: BoxFit.cover),
                   ),
                 ),
                 verticalSpace(20.h),
@@ -108,6 +111,7 @@ class _AddProjectAssetsScreenState extends State<AddProjectAssetsScreen> {
                 verticalSpace(20.h),
                 AppTextField(
                   controller: _priceController,
+                  keyboardType: TextInputType.number,
                   hintText: 'Price',
                   validator: (value) => value!.trim().isEmpty ? 'Please Enter Valid Price' : null,
                 ),
@@ -120,6 +124,7 @@ class _AddProjectAssetsScreenState extends State<AddProjectAssetsScreen> {
                 verticalSpace(20.h),
                 AppTextField(
                   controller: _typeController,
+                  keyboardType: TextInputType.number,
                   hintText: 'Total',
                   validator: (value) => value!.isEmpty ? 'Please Enter Valid Total' : null,
                 ),

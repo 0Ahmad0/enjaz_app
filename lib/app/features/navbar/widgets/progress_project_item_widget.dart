@@ -6,15 +6,21 @@ import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../../core/models/project_model.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/image_user_provider.dart';
+import '../../core/controllers/process_controller.dart';
 
 class ProgressProjectItemWidget extends StatefulWidget {
   final ProjectStatus status;
+  final ProjectModel? item;
   const ProgressProjectItemWidget({
-    super.key, required this.status,
+    super.key, required this.status, this.item,
   });
 
   @override
@@ -36,7 +42,13 @@ class _ProgressProjectItemWidgetState extends State<ProgressProjectItemWidget> {
   }
 
   @override
+  void initState() {
+    Get.put(ProcessController()).fetchUsers(context, idUsers: widget.item?.members??[]);
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
@@ -60,7 +72,7 @@ class _ProgressProjectItemWidgetState extends State<ProgressProjectItemWidget> {
               CircularPercentIndicator(
                 radius: 36.sp,
                 lineWidth: 5,
-                percent: .32,
+                percent: widget.item?.progress?.toDouble()??.32,
                 center: Text(
                   "32",
                   style: StyleManager.font24Bold(),
@@ -79,13 +91,15 @@ class _ProgressProjectItemWidgetState extends State<ProgressProjectItemWidget> {
                       contentPadding: EdgeInsets.zero,
                       trailing: InkWell(
                         onTap: () {
-                          context.pushNamed(Routes.projectDetailsRoute);
+
+                          context.pushNamed(Routes.projectDetailsRoute,arguments: {"project":widget.item});
                         },
                         child: Icon(
                           Icons.table_chart,
                         ),
                       ),
                       title: Text(
+                        widget.item?.nameProject??
                         'VIP House Building',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -99,6 +113,7 @@ class _ProgressProjectItemWidgetState extends State<ProgressProjectItemWidget> {
                           ),
                           horizontalSpace(4.w),
                           Text(
+                            widget.item?.location?.address??
                             'KSA , Jadahh',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -108,62 +123,132 @@ class _ProgressProjectItemWidgetState extends State<ProgressProjectItemWidget> {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 56.w,
-                          height: 28.h,
-                          child: Stack(
-                            children: List.generate(
-                              3,
-                                  (index) =>
-                                  Positioned(
-                                    left: 12.0 * index,
-                                    child: CircleAvatar(
-                                      radius: 14.r,
-                                      backgroundColor: index.isEven
-                                          ? ColorManager.hintTextColor
-                                          : ColorManager.blueColor,
-                                      child: Text(
-                                        index.toString(),
-                                        style: StyleManager.font10Regular(),
+
+                    GetBuilder<ProcessController>(
+                        builder: (ProcessController processController){
+                          String nameMember="";
+                          for(int index=0;index<(widget.item?.members??[]).length;index++){
+                            if(index<3)
+                              nameMember+="${    processController
+                                  .fetchLocalUser(idUser: widget.item?.members?[index]??"")?.name??"user$index"}, ";
+                            else if(index ==3)
+                              nameMember+="Other";
+                          }
+                          return   Row(
+                            children: [
+                              SizedBox(
+                                width: 56.w,
+                                height: 28.h,
+                                child: Stack(
+                                  children:  List.generate(
+                                    widget.item?.members?.length??0,
+                                        (index) => Positioned(
+                                      left: 12.0 * index,
+                                      child:
+                                      Get.put(ProcessController())
+                                          .fetchLocalUser(idUser: widget.item?.members?[index]??"")!=null?
+                                      ImageUserProvider(
+                                        radius:  14.r,
+                                        url:
+                                        Get.put(ProcessController())
+                                            .fetchLocalUser(idUser: widget.item?.members?[index]??"") ?.photoUrl??""
+                                        ,):
+                                      CircleAvatar(
+                                        radius: 14.r,
+                                        backgroundColor: index.isEven
+                                            ? ColorManager.hintTextColor
+                                            : ColorManager.blueColor,
+                                        child: Text(
+                                          index.toString(),
+                                          style: StyleManager.font10Regular(),
+                                        ),
                                       ),
                                     ),
                                   ),
-                            ),
-                          ),
-                        ),
-                        horizontalSpace(8.w),
-                        Flexible(
-                          child: ListTile(
-                            dense: true,
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              '3 People',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: StyleManager.font12SemiBold(),
-                            ),
-                            subtitle: Text(
-                              'Ahmad , rahaf, khaled',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: StyleManager.font10Regular(),
-                            ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  DateFormat.yMd().format(DateTime.now()),
-                                  style: StyleManager.font10Regular(
-                                      color: ColorManager.hintTextColor),
                                 ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    )
+                              ),
+                              horizontalSpace(8.w),
+                              Flexible(
+                                child: ListTile(
+                                  dense: true,
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    '${  widget.item?.members?.length??"-"} People',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: StyleManager.font12SemiBold(),
+                                  ),
+                                  subtitle: Text(
+                                    nameMember,
+                                    // 'Ahmad , rahaf, khaled',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: StyleManager.font10Regular(),
+                                  ),
+                                ),
+                              )
+                            ],
+                          );
+                        })
+
+                    // Row(
+                    //   children: [
+                    //     SizedBox(
+                    //       width: 56.w,
+                    //       height: 28.h,
+                    //       child: Stack(
+                    //         children: List.generate(
+                    //           3,
+                    //               (index) =>
+                    //               Positioned(
+                    //                 left: 12.0 * index,
+                    //                 child: CircleAvatar(
+                    //                   radius: 14.r,
+                    //                   backgroundColor: index.isEven
+                    //                       ? ColorManager.hintTextColor
+                    //                       : ColorManager.blueColor,
+                    //                   child: Text(
+                    //                     index.toString(),
+                    //                     style: StyleManager.font10Regular(),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     horizontalSpace(8.w),
+                    //     Flexible(
+                    //       child: ListTile(
+                    //         dense: true,
+                    //         contentPadding: EdgeInsets.zero,
+                    //         title: Text(
+                    //           '3 People',
+                    //           maxLines: 1,
+                    //           overflow: TextOverflow.ellipsis,
+                    //           style: StyleManager.font12SemiBold(),
+                    //         ),
+                    //         subtitle: Text(
+                    //           'Ahmad , rahaf, khaled',
+                    //           maxLines: 1,
+                    //           overflow: TextOverflow.ellipsis,
+                    //           style: StyleManager.font10Regular(),
+                    //         ),
+                    //         trailing: Column(
+                    //           mainAxisAlignment: MainAxisAlignment.end,
+                    //           children: [
+                    //             Text(
+                    //               DateFormat.yMd().format(
+                    //                   widget.item?.selectDate??
+                    //                   DateTime.now()),
+                    //               style: StyleManager.font10Regular(
+                    //                   color: ColorManager.hintTextColor),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     )
+                    //   ],
+                    // )
                   ],
                 ),
               )

@@ -25,7 +25,7 @@ class NoDataFoundWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if(image!=null)
+        if(image.isNotEmpty)
           Image.asset(
               image,
               width: 100.w,

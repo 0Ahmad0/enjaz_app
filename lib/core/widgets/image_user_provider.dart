@@ -24,10 +24,10 @@ class ImageUserProvider extends StatelessWidget {
           height: height,
           width: width,
           frameBuilder:(context,widget,i,a)=>i!=null?widget:
-          errorBuilder?? Icon(FontAwesomeIcons.userLarge),
+          errorBuilder?? Icon(FontAwesomeIcons.userLarge,size: radius,),
           // Image.asset(AssetsManager.consultIMG,width: width,height: height,),
           errorBuilder:(context,_,__)=>
-              errorBuilder?? Icon(FontAwesomeIcons.userLarge),
+              errorBuilder?? Icon(FontAwesomeIcons.userLarge,size: radius,),
               // Image.asset(AssetsManager.consultIMG,width: width,height: height,),
         ),
       ),

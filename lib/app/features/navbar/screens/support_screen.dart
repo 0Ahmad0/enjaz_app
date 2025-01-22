@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:enjaz_app/app/features/navbar/controller/report_controller.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/const_value_manager.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
@@ -12,6 +13,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../core/helpers/spacing.dart';
 
@@ -31,8 +34,17 @@ class _SupportScreenState extends State<SupportScreen> {
   int _currentIndex = -1;
   int _currentIndexOption = -1;
   int _currentIndexRate = -1;
+  String? selectIssue;
   List<File?> _files = [];
-
+  late ReportController controller;
+  final _descriptionController=TextEditingController();
+  @override
+  void initState() {
+    controller = Get.put(ReportController());
+    controller.onInit();
+    controller.report=null;
+    super.initState();
+  }
   _pickMultipleFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -48,13 +60,61 @@ class _SupportScreenState extends State<SupportScreen> {
       ));
     }
   }
+  Future<bool> validateReport(BuildContext context) async {
+    String? error;
 
+    if(_currentIndexRate==-1){
+      error="Please select rate";
+    }
+
+    if(_descriptionController.value.text?.isEmpty??true){
+      error="Please Enter description";
+    }
+
+    if(selectIssue?.isEmpty??true){
+      error="Please select issue";
+    }
+    if(_currentIndexOption==-1){
+      error="Please select contact option";
+    }
+    if(_currentIndex==-1){
+      error="Please select frequently asked question";
+    }
+    if(error!=null)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+
+    return error==null;
+  }
+
+  Future<void> _addReport(BuildContext context) async {
+    if ((await validateReport(context))) {
+      // if (_selectedToolImage == null) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text('الرجاء اختيار صورة للمنتج')),
+      //   );
+      //   return;
+      // }
+      controller.addReport(context,
+          issue:selectIssue ,
+          description:_descriptionController.text ,
+          isSatisfied:_currentIndexRate==0 ,
+          contactOption:ConstValueManager.contactOptionList[_currentIndexOption],
+          frequentlyAskedQuestion: ConstValueManager
+              .technicalSupportAskedQuestionList[_currentIndex],
+
+          files: _files);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(StringManager.technicalSupportText),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+        actions: [IconButton(onPressed: () {
+          _addReport(context);
+        }, icon: Icon(Icons.add))],
       ),
       body: FadeInLeft(
         child: SingleChildScrollView(
@@ -170,7 +230,7 @@ class _SupportScreenState extends State<SupportScreen> {
                     icon: Icon(
                       Icons.keyboard_arrow_down,
                     ),
-                    items: [1, 2, 3]
+                    items: ["1", "2", "3"]
                         .map((e) => DropdownMenuItem(
                               child: Text(
                                 e.toString(),
@@ -178,10 +238,13 @@ class _SupportScreenState extends State<SupportScreen> {
                               value: e.toString(),
                             ))
                         .toList(),
-                    onChanged: (value) {}),
+                    onChanged: (value) {
+                      selectIssue="${value}";
+                    }),
               ),
               AppPaddingWidget(
                 child: AppTextField(
+                  controller: _descriptionController,
                   minLine: 4,
                   maxLine: 8,
                   keyboardType: TextInputType.multiline,

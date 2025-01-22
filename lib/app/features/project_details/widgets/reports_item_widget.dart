@@ -6,6 +6,7 @@ import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:enjaz_app/core/utils/color_manager.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/utils/style_manager.dart';
+import 'package:enjaz_app/core/widgets/image_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -23,19 +24,20 @@ class ReportsItemWidget extends StatefulWidget {
     super.key,
     required this.image,
     required this.name,
-    required this.date,
+    required this.date, this.url,
   });
 
-  final String image;
+  final String? image;
   final String name;
   final String date;
+  final String? url;
 
   @override
   State<ReportsItemWidget> createState() => _ReportsItemWidgetState();
 }
 
 class _ReportsItemWidgetState extends State<ReportsItemWidget> {
-  final _pdfLink =
+  String _pdfLink =
       'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
 
   Future<void> requestPermissions() async {
@@ -76,6 +78,7 @@ class _ReportsItemWidgetState extends State<ReportsItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    _pdfLink=widget.url?? _pdfLink;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
@@ -143,9 +146,11 @@ class _ReportsItemWidgetState extends State<ReportsItemWidget> {
           ListTile(
             contentPadding: EdgeInsets.zero,
             dense: true,
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(widget.image),
-            ),
+            leading:
+            ImageUserProvider(url: widget.image??"",),
+            // CircleAvatar(
+            //   backgroundImage: NetworkImage(widget.image),
+            // ),
             title: Text(
               widget.name,
               style: StyleManager.font14Bold(),

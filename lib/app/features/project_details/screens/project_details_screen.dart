@@ -1,18 +1,29 @@
+import 'dart:io';
+
 import 'package:enjaz_app/app/features/auth/controller/auth_controller.dart';
+import 'package:enjaz_app/app/features/profile/controller/profile_controller.dart';
 import 'package:enjaz_app/core/helpers/extensions.dart';
+import 'package:enjaz_app/core/models/file_model.dart';
 import 'package:enjaz_app/core/routing/routes.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:enjaz_app/core/utils/string_manager.dart';
 import 'package:enjaz_app/core/widgets/custome_back_button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/enums/enums.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/const_value_manager.dart';
 import '../../../../core/utils/style_manager.dart';
 import '../../../../core/widgets/app_padding.dart';
+import '../../create_project/controller/project_controller.dart';
+import '../controller/report_project_controller.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
   const ProjectDetailsScreen({super.key});
@@ -23,15 +34,49 @@ class ProjectDetailsScreen extends StatefulWidget {
 
 class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   int _currentIndex = 0;
-
+  late ProjectController controller;
+  @override
+  void initState() {
+    controller = Get.put(ProjectController());
+    controller.onInit();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    final args =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    controller.project=args?["project"];
+
     return Scaffold(
       floatingActionButton: Visibility(
         /// ToDO: Check The User Is Manager Project
+        // visible: controller.project?.idUser== Get.put(ProfileController()).currentUser.value?.uid,
         visible: _currentIndex == 0,
         child: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
+            FilePickerResult? result = await FilePicker.platform.pickFiles(
+              type: FileType.custom, // لتحديد نوع مخصص من الملفات
+              allowedExtensions: ['pdf'], // السماح فقط بملفات PDF
+              allowMultiple: false,
+
+            );
+
+            if (result != null) {
+              final files = result.paths.map((path) => File(path!)).toList();
+              FileModel fileModel=FileModel(
+                  name:XFile( files.first.path).name,
+                  localUrl: files.first.path,
+                  size: await files.first.length(),
+                  type: TypeFile.file.name,
+                  subType:files.first.path.split('/').last.split('.').last);
+                  Get.put(ReportProjectController()).addReportProject(context,file: fileModel,idProject: controller.project?.id);
+             
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('Please select atleast 1 file'),
+              ));
+            }
+        
             //TODO : Here Upload New Report As File
           },
           child: Icon(Icons.add),

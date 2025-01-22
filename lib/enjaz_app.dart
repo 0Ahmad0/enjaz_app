@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app/features/project_details/screens/project_details_screen.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 import 'core/utils/color_manager.dart';
@@ -94,7 +95,9 @@ class EnjazApp extends StatelessWidget {
             // home: NavbarScreen(),
             initialRoute: Routes.initialRoute,
             onGenerateRoute: appRouter.generateRoute,
-            routes: {},
+            routes: {
+              Routes.projectDetailsRoute: (_) => ProjectDetailsScreen(),
+            },
           );
         });
   }

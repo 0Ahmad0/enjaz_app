@@ -7,13 +7,18 @@ import 'package:enjaz_app/core/utils/style_manager.dart';
 import 'package:enjaz_app/core/widgets/app_padding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+
+import '../../create_project/controller/project_controller.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final project= Get.put(ProjectController()).project;
     return ZoomIn(
       child: AppPaddingWidget(
         child: SingleChildScrollView(
@@ -21,6 +26,7 @@ class DetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                project?.nameProject??
                 'VIP House Building',
                 style: StyleManager.font16SemiBold(),
               ),
@@ -28,6 +34,7 @@ class DetailsScreen extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(14.r),
                 child: Image.network(
+                  project?.urlPhoto??
                   'https://mir-s3-cdn-cf.behance.net/project_modules/fs/e37de3152201755.6319b93ae5de3.jpg',
                   width: double.infinity,
                   height: 220.h,
@@ -50,6 +57,7 @@ class DetailsScreen extends StatelessWidget {
                       color: ColorManager.hintTextColor,
                     )),
                 child: Text(
+                  project?.description??
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                   style: StyleManager.font12Regular(),
                 ),
@@ -70,8 +78,12 @@ class DetailsScreen extends StatelessWidget {
                 ),
                 child: Text(
                   DateFormat.yMd().format(
+                    project?.endDate??
                     DateTime.now(),
-                  ) + '  -  ${65} Day',
+                  ) + '  -  ${
+                      project?.endDate?.difference(DateTime.now()).inDays??
+
+                      65} Day',
                 ),
               ),
               verticalSpace(10.h),
