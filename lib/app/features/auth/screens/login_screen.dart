@@ -17,9 +17,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late AuthController authController;
+  @override
+  void initState() {
+    authController= Get.put(AuthController());
+    authController.init();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     // final authController = Get.put(AuthController());
@@ -28,6 +40,7 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: AppPaddingWidget(
           child: Form(
+            key: authController.formKey,
             child: SingleChildScrollView(
               child: FadeInLeft(
                 child: Column(
@@ -45,28 +58,28 @@ class LoginScreen extends StatelessWidget {
                     verticalSpace(60.h),
                     AppTextField(
                       iconData: AssetsManager.usernameIcon,
-                      // controller:  authController.emailController,
+                      controller:  authController.emailController,
                       hintText: StringManager.enterEmailHintText,
-                      // validator: (value)=>authController.validateEmail(value??'')
+                      validator: (value)=>authController.validateEmail(value??'')
                     ),
                     verticalSpace(20.h),
                     AppTextField(
-                      // controller: authController.passwordController,
+                      controller: authController.passwordController,
                       obscureText: true,
                       suffixIcon: true,
                       iconData: AssetsManager.lockIcon,
-                      // validator: (value)=>authController.validatePassword(value??''),
+                      validator: (value)=>authController.validatePassword(value??''),
                       hintText: StringManager.enterPasswordHintText,
                     ),
                     verticalSpace(20.h),
                     AppButton(
-                      onPressed: () {
-                        context.pushReplacement(Routes.navbarRoute);
-                        // Seeder.serviceProvider();
+                      onPressed: () async {
                         // context.pushReplacement(Routes.navbarRoute);
-                        // if (authController.formKey.currentState!.validate()) {
-                        // authController.login(context);
-                        // }
+                        // await authController.seeder();
+                        // context.pushReplacement(Routes.navbarRoute);
+                        if (authController.formKey.currentState!.validate()) {
+                        authController.login(context);
+                        }
                       },
                       text: StringManager.loginText,
                     ),
@@ -108,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                         ]),
                       ),
                     )
-                
+
                   ],
                 ),
               ),

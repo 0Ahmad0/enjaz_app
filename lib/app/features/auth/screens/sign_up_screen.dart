@@ -3,6 +3,8 @@ import 'package:enjaz_app/core/utils/assets_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../../../core/utils/const_value_manager.dart';
 import '../controller/auth_controller.dart';
 import '/core/helpers/extensions.dart';
@@ -36,12 +38,14 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   late List s;
+  late AuthController authController;
 
   // late AuthController authController;
 
   @override
   void initState() {
-    // authController.init();
+    authController= Get.put(AuthController());
+    authController.init();
     s = ConstValueManager.conditionPasswordList;
     Future.delayed(Duration(seconds: 2), () {
       passwordController.addListener(() {
@@ -66,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child: AppPaddingWidget(
             child: Form(
-              // key: authController.formKey,
+              key: authController.formKey,
               child: FadeInUp(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,9 +125,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               verticalSpace(8.h),
                               AppTextField(
                                 // iconData: AssetsManager.usernameIcon,
-                                // controller: authController.nameController,
-                                // validator: (value) =>
-                                //     authController.validateFullName(value ?? ''),
+                                controller: authController.nameController,
+                                validator: (value) =>
+                                    authController.validateFullName(value ?? ''),
                                 hintText: StringManager.enterHereToTypeText,
                               ),
                             ],
@@ -139,9 +143,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               verticalSpace(8.h),
                               AppTextField(
                                 // iconData: AssetsManager.usernameIcon,
-                                // controller: authController.emailController,
-                                // validator: (value) =>
-                                //     authController.validateEmail(value ?? ''),
+                                controller: authController.emailController,
+                                validator: (value) =>
+                                    authController.validateEmail(value ?? ''),
                                 hintText: StringManager.enterHereToTypeText,
                               ),
                             ],
@@ -155,9 +159,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     verticalSpace(8.h),
                     AppTextField(
                       // iconData: AssetsManager.usernameIcon,
-                      // controller: authController.phoneController,
-                      // validator: (value) =>
-                      //     authController.validatePhoneNumber(value ?? ''),
+                      controller: authController.phoneController,
+                      validator: (value) =>
+                          authController.validatePhoneNumber(value ?? ''),
                       hintText: StringManager.enterHereToTypeText,
                     ),
                     verticalSpace(10.h),
@@ -166,9 +170,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     verticalSpace(8.h),
                     AppTextField(
                       // iconData: AssetsManager.usernameIcon,
-                      // controller: authController.phoneController,
-                      // validator: (value) =>
-                      //     authController.validatePhoneNumber(value ?? ''),
+                      controller: authController.phoneController,
+                      validator: (value) =>
+                          authController.validatePhoneNumber(value ?? ''),
                       hintText: StringManager.enterHereToTypeText,
                     ),
                     verticalSpace(10.h),
@@ -245,9 +249,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AppTextField(
                       obscureText: true,
                       suffixIcon: true,
-                      // controller: authController.confirmPasswordController,
-                      // validator: (value) =>
-                      //     authController.validatePassword(value ?? ''),
+                      controller: authController.confirmPasswordController,
+                      validator: (value) =>
+                          authController.validatePassword(value ?? ''),
                       hintText: StringManager.rewritePasswordAgainText,
                     ),
                     verticalSpace(10.h),
@@ -258,11 +262,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     verticalSpace(10.h),
                     AppButton(
                       onPressed: () {
-                        // if (authController.formKey.currentState!.validate() &&
-                        //     ConstValueManager.conditionPasswordList
-                        //         .every((element) => element.isValidate)) {
-                        // authController.signUp(context);
-                        // }
+                        if (authController.formKey.currentState!.validate() &&
+                            ConstValueManager.conditionPasswordList
+                                .every((element) => element.isValidate)) {
+                        authController.signUp(context);
+                        }
                       },
                       text: StringManager.signUpText,
                     ),

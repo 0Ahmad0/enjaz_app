@@ -1,3 +1,4 @@
+import '../../profile/controller/profile_controller.dart';
 import '/core/helpers/extensions.dart';
 import '/core/helpers/spacing.dart';
 import '/core/utils/string_manager.dart';
@@ -56,6 +57,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   suffixIcon: true,
                   obscureText: true,
                   validator: (String? val) {
+
+                    if (val!.trim().isEmpty) return StringManager.requiredField;
+                    if ( !(Get.put(ProfileController()).currentUser.value?.checkPassword(val)??false)) return StringManager.unCorrectPassword;
+                    return null;
                   } ,
                 ),
                 verticalSpace(20.h),
@@ -91,6 +96,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         child: AppButton(
                           onPressed: () {
                             if(formKey.currentState!.validate()){
+                              Get.put(ProfileController()).changePassword(newPasswordController.value.text);
+
                             }
                           },
                           text: StringManager.saveChangesText,

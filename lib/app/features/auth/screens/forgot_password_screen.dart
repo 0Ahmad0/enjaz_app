@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 
 import '../../../../core/utils/assets_manager.dart';
+import '../controller/auth_controller.dart';
 import '/core/helpers/extensions.dart';
 import '/core/routing/routes.dart';
 import '/core/widgets/app_button.dart';
@@ -27,6 +28,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   final emailController = TextEditingController();
 
+  late AuthController authController;
+
+  @override
+  void initState() {
+    authController = AuthController();
+    super.initState();
+  }
   @override
   void dispose() {
     emailController.dispose();
@@ -74,11 +82,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
                 verticalSpace(40.h),
-                AppButton(onPressed: (){
-                  if(formKey.currentState!.validate()){
-                  context.pushReplacement(Routes.checkYourInboxRoute);
-            
+                AppButton(onPressed: () async {
+                  if (formKey.currentState!.validate()) {
+                    await authController.sendPasswordResetEmail(context, email: emailController.value.text);
+                    print('Send Email ');
+                  } else {
+                    print('Error');
                   }
+
                 }, text: StringManager.submitText)
             
               ],

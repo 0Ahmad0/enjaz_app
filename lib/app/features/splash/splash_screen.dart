@@ -14,6 +14,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import 'controller/splash_controller.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -31,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _goToNextScreen();
+    // _goToNextScreen();
+    Get.put(SplashController()).initSplash(context);
     super.initState();
   }
   @override
