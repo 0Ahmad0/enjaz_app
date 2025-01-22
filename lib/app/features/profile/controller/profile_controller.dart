@@ -1,8 +1,23 @@
 import 'dart:io';
+
+import 'package:bcrypt/bcrypt.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/local/storage.dart';
+import '../../../../core/models/user_model.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/utils/app_constant.dart';
+import '../../../../core/utils/color_manager.dart';
+import '../../../../core/utils/string_manager.dart';
+import '../../../../core/widgets/constants_widgets.dart';
+import '../../core/controllers/firebase/firebase_fun.dart';
 
 
 class ProfileController extends GetxController {
@@ -19,7 +34,7 @@ class ProfileController extends GetxController {
   //   return _instance!;
   // }
   // static ProfileController  get instance => Get.find<ProfileController>();
-  // final Rx<UserModel?> currentUser = Rx(null);
+  final Rx<UserModel?> currentUser = Rx(null);
   final timeLimit = Duration(seconds: 60);
   //controllers
   TextEditingController nameController = TextEditingController();
@@ -28,7 +43,7 @@ class ProfileController extends GetxController {
   TextEditingController phoneController = TextEditingController();
   TextEditingController dateBirthController = TextEditingController();
   String? gender;
-/*
+
   Future<void> updateImage(XFile? image) async {
     try {
       // ConstantsWidgets.showLoading(context);
@@ -77,6 +92,7 @@ class ProfileController extends GetxController {
       print(profileImage);
       if(email!=currentUser.value?.email)
         auth.currentUser?.verifyBeforeUpdateEmail(email);
+
       // auth.currentUser?.updateEmail();
       // if(password!=''&&password!=null)
       //   auth.currentUser?.updatePassword(password!);
@@ -245,6 +261,8 @@ class ProfileController extends GetxController {
 
 
     } catch (e) {
+
+      currentUser.value= null;
       String errorMessage;
       // errorMessage = "An unexpected error occurred. Please try again later.";
       errorMessage = "An unexpected error occurred. Please try again later.";
@@ -294,8 +312,6 @@ class ProfileController extends GetxController {
     // genderController = TextEditingController();
     imagePath=currentUser.value?.photoUrl;
   }
-
- */
   @override
   void onInit() {
     _imagePicker = ImagePicker();
