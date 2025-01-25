@@ -3,41 +3,39 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../enums/enums.dart';
 import 'file_model.dart';
 
-class ReportProject {
+class ImageProject {
   String? id;
   String? idUser;
   String? idProject;
   String? nameUser;
   DateTime? dateTime;
-  FileModel? file;
-  String? status;
+  String? url;
 
-  ReportProject({
+
+  ImageProject({
     this.id,
     this.nameUser,
     this.dateTime,
-    this.file,
+    this.url,
     this.idUser,
     this.idProject,
-    this.status,
-  });
-  AccountRequestStatus?  get getStatus=>AccountRequestStatus.values.where((e)=>e.name.toLowerCase()==status?.toLowerCase()).firstOrNull;
 
-  factory ReportProject.fromJson(json) {
+  });
+
+  factory ImageProject.fromJson(json) {
     var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
-    return ReportProject(
+    return ImageProject(
         id: data['id'],
       idUser: data["idUser"],
       dateTime: data["dateTime"]?.toDate(),
       nameUser: data["nameUser"],
       idProject: data["idProject"],
-      status: data["status"],
-      file: data["file"]==null?null:FileModel.fromJson( data["file"]),
+      url: data["url"],
     );
   }
 
-  factory ReportProject.init() {
-    return ReportProject();
+  factory ImageProject.init() {
+    return ImageProject();
   }
 
 
@@ -47,29 +45,28 @@ class ReportProject {
     'nameUser': nameUser,
     'idUser': idUser,
     'idProject': idProject,
-    'status': status,
-    'file': file?.toJson(),
+    'url': url,
       'dateTime': dateTime==null?null:Timestamp.fromDate(dateTime!),
   };
   }
 }
 
-///ReportProjects
-class ReportProjects {
-  List<ReportProject> items;
+///imageProjects
+class ImageProjects {
+  List<ImageProject> items;
 
 
 
-  ReportProjects({required this.items});
+  ImageProjects({required this.items});
 
-  factory ReportProjects.fromJson(json) {
-    List<ReportProject> temp = [];
+  factory ImageProjects.fromJson(json) {
+    List<ImageProject> temp = [];
     for (int i = 0; i < json.length; i++) {
-      ReportProject tempElement = ReportProject.fromJson(json[i]);
+      ImageProject tempElement = ImageProject.fromJson(json[i]);
       tempElement.id = json[i].id;
       temp.add(tempElement);
     }
-    return ReportProjects(items: temp);
+    return ImageProjects(items: temp);
   }
 
   Map<String, dynamic> toJson() {

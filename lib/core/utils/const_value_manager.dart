@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../app/features/navbar/screens/chat_screen.dart';
 import '../../app/features/navbar/screens/project_progress_screen.dart';
 import '../../app/features/navbar/screens/support_screen.dart';
+import '../../app/features/project_details/screens/request_reports_screen.dart';
 import '../enums/enums.dart';
 import '/core/helpers/get_color_status_appointments.dart';
 import '/core/routing/routes.dart';
@@ -61,6 +62,7 @@ class ConstValueManager {
 
   static List<ProjectDetails> projectDetailsList = [
     ProjectDetails(label: 'Reports', screen: ReportsScreen()),
+    ProjectDetails(label: 'Requests', screen: RequestReportsScreen()),
     ProjectDetails(label: 'Assets', screen: AssetsScreen()),
     ProjectDetails(label: 'Location', screen: LocationScreen()),
     ProjectDetails(label: 'Weather', screen: WeatherScreen()),

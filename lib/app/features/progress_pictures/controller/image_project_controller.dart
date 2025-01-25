@@ -14,23 +14,24 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/models/file_model.dart';
 
+import '../../../../core/models/image_project.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../core/controllers/firebase/firebase_constants.dart';
 import '../../core/controllers/firebase/firebase_fun.dart';
 import '../../profile/controller/profile_controller.dart';
 
 
-class ReportProjectController extends GetxController{
+class ImageProjectController extends GetxController{
 
 
   String? uid;
-  ReportProject? reportProject;
+  ImageProject? imageProject;
   int currentProgress=0;
   int fullProgress=0;
 
   @override
   void onInit() {
-    reportProject=ReportProject.init();
+    imageProject=ImageProject.init();
     ProfileController profileController=Get.put(ProfileController());
     uid= profileController.currentUser.value?.uid;
 
@@ -38,33 +39,38 @@ class ReportProjectController extends GetxController{
     }
 
 
-  addReportProject(context,{FileModel? file,String? idProject,String? state}) async {
+  addImageProject(context,{List<XFile>? files,String? idProject}) async {
     // ConstantsWidgets.showProgress(progress);
 
-    _calculateProgress(1);
+    _calculateProgress(files?.length??0);
     Get.dialog(
-      GetBuilder<ReportProjectController>(
-          builder: (ReportProjectController controller) =>
+      GetBuilder<ImageProjectController>(
+          builder: (ImageProjectController controller) =>
               ConstantsWidgets.showProgress(controller.currentProgress/controller.fullProgress)
       ),
       barrierDismissible: false,
     );
-
-    String id= '${XFile(file?.localUrl??"").name??""}000000'.substring(0,6)+'${Timestamp.now().microsecondsSinceEpoch}';
+    var result;
+    for(XFile file in files??[]){
+      String id= '${XFile(file?.path??"").name??""}000000'.substring(0,6)+'${Timestamp.now().microsecondsSinceEpoch}';
+      String? url;
       if(file!=null){
-        file.url=await FirebaseFun.uploadImage(image:XFile(file.localUrl??''),folder: FirebaseConstants.collectionReportProject+'/$id');
-      _plusProgress();
+        url=await FirebaseFun.uploadImage(image:XFile(file.path??''),folder: FirebaseConstants.collectionReportProject+'/$id');
+        _plusProgress();
+      }
+      if(url?.isEmpty??true)
+        return;
+      ImageProject imageProject=ImageProject(
+          id: id,
+          idProject:idProject,
+          idUser:uid,
+          url:url,
+          nameUser: Get.put(ProfileController()).currentUser?.value?.name,
+          dateTime: DateTime.now()
+      );
+       result=await FirebaseFun.addImageProject(imageProject:imageProject);
+
     }
-    ReportProject reportProject=ReportProject(
-        id: id,
-        idProject:idProject,
-        idUser:uid,
-        file:file,
-        status:state,
-        nameUser: Get.put(ProfileController()).currentUser?.value?.name,
-        dateTime: DateTime.now()
-    );
-    var result=await FirebaseFun.addReportProject(reportProject:reportProject);
 
     ConstantsWidgets.closeDialog();
     if(result['status']){
@@ -74,6 +80,7 @@ class ReportProjectController extends GetxController{
 
       // Get.back();
     }
+    else
     ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
     return result;
   }

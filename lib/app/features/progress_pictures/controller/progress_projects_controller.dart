@@ -6,6 +6,7 @@ import 'package:enjaz_app/core/models/project_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../../core/enums/enums.dart';
+import '../../../../core/models/image_project.dart';
 import '../../../../core/models/report_project.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/string_manager.dart';
@@ -17,28 +18,28 @@ import '../../messages/controller/chat_controller.dart';
 import '../../messages/controller/chat_room_controller.dart';
 import '../../profile/controller/profile_controller.dart';
 
-class ReportProjectsController extends GetxController{
+class ProgressProjectsController extends GetxController{
 
   final searchController = TextEditingController();
-  ReportProjects reportProjects=ReportProjects(items: []);
-  ReportProjects reportProjectsWithFilter=ReportProjects(items: []);
+  ImageProjects imageProjects=ImageProjects(items: []);
+  ImageProjects imageProjectsWithFilter=ImageProjects(items: []);
   String? uid;
   String? idProject;
 
-  var getReportProjects;
+  var getImageProjects;
 
   @override
   void onInit() {
    searchController.clear();
    ProfileController profileController=Get.put(ProfileController());
    uid= profileController.currentUser.value?.uid;
-   getReportProjectsFun();
+   getImageProjectsFun();
     super.onInit();
     }
 
-  getReportProjectsFun() async {
-    getReportProjects =_fetchReportProjectsStream();
-    return getReportProjects;
+  getImageProjectsFun() async {
+    getImageProjects =_fetchImageProjectsStream();
+    return getImageProjects;
   }
   @override
   void dispose() {
@@ -47,20 +48,19 @@ class ReportProjectsController extends GetxController{
   }
 
 
-  _fetchReportProjectsStream() {
+  _fetchImageProjectsStream() {
     final result= FirebaseFirestore.instance
-        .collection(FirebaseConstants.collectionReportProject)
+        .collection(FirebaseConstants.collectionImageProject)
         .where('idProject',isEqualTo: idProject)
-        .where('status',isEqualTo: AccountRequestStatus.Accepted.name)
         .snapshots();
     return result;
   }
-  filterReportProjects({required String term}) async {
+  filterImageProjects({required String term}) async {
 
-    reportProjectsWithFilter.items=[];
-    reportProjects.items.forEach((element) {
-      if((element.file?.name?.toLowerCase().contains(term.toLowerCase())??false))
-        reportProjectsWithFilter.items.add(element);
+    imageProjectsWithFilter.items=[];
+    imageProjects.items.forEach((element) {
+      // if((element.name?.toLowerCase().contains(term.toLowerCase())??false))
+        imageProjectsWithFilter.items.add(element);
     });
      update();
   }

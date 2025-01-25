@@ -23,6 +23,7 @@ import '../../../../core/utils/const_value_manager.dart';
 import '../../../../core/utils/style_manager.dart';
 import '../../../../core/widgets/app_padding.dart';
 import '../../create_project/controller/project_controller.dart';
+import '../../progress_pictures/screens/pick_images_progrees_screen.dart';
 import '../controller/report_project_controller.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
@@ -51,7 +52,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
       floatingActionButton: Visibility(
         /// ToDO: Check The User Is Manager Project
         // visible: controller.project?.idUser== Get.put(ProfileController()).currentUser.value?.uid,
-        visible: _currentIndex == 0,
+        visible: (_currentIndex == 0&&(controller.project?.isWorkManager??false))
+        ||(_currentIndex == 1&&!(controller.project?.isWorkManager??false)),
         child: FloatingActionButton(
           onPressed: () async {
             FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -69,7 +71,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   size: await files.first.length(),
                   type: TypeFile.file.name,
                   subType:files.first.path.split('/').last.split('.').last);
-                  Get.put(ReportProjectController()).addReportProject(context,file: fileModel,idProject: controller.project?.id);
+                  Get.put(ReportProjectController()).addReportProject(context,file: fileModel,idProject: controller.project?.id
+                  ,state: controller.project?.isWorkManager??false?AccountRequestStatus.Accepted.name:null);
              
             } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -86,7 +89,10 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              context.pushNamed(Routes.progressPictureRoute);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (_)=> PickImageProgreesScreen()
+              ));
+              // context.pushNamed(Routes.progressPictureRoute);
             },
             icon: Padding(
               padding: EdgeInsets.all(8.sp),

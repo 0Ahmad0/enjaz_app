@@ -59,6 +59,7 @@ class StringManager {
   static const String requiredField = "Filed Is Required";
   static const String unCorrectPassword = "UnCorrect Password";
   static const String loginText = 'Login';
+  static const String logoutText = 'Logout';
   static const String signUpText = 'Signup';
   static const String createAccountNowText = 'Create Account Now';
   static const String submitText = 'Submit';
@@ -90,6 +91,8 @@ class StringManager {
   static const String viewText = 'View';
   static const String dismissText = 'Dismiss';
 
+
+  static const String okText = 'Ok';
   ///Splash Screen
   static const String splashScreenText = 'Your Car\'s Health Is Our Priority';
 
@@ -402,7 +405,14 @@ class StringManager {
   static const appointmentRatingText = "Appointment Rating";
   static const deleteUserText = "Delete User";
   static const areYouSureDeleteUSerText =
-      """ Are you sure you want to delete user permanently.
+  """ Are you sure you want to delete user permanently.
+You can’t undo this action""";
+  static const areYouSureRejectRequestText =
+  """ Are you sure you want to reject request.
+You can’t undo this action""";
+
+  static const areYouSureApprovedRequestText =
+  """ Are you sure you want to approved request.
 You can’t undo this action""";
   static const latestAppointmentsText = "Latest Appointments";
   static const urgentServicesText = "Urgent Services";

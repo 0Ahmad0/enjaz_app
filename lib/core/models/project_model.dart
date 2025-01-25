@@ -1,7 +1,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enjaz_app/app/features/profile/controller/profile_controller.dart';
 import 'package:enjaz_app/core/models/assets_project.dart';
 import 'package:enjaz_app/core/models/report_project.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../enums/enums.dart';
@@ -40,6 +43,7 @@ class ProjectModel {
     this.assets,
   });
 
+  bool get isWorkManager=>idUser==Get.put(ProfileController()).currentUser?.value?.uid;
   factory ProjectModel.fromJson(json) {
     var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
     List<String> tempList = [];

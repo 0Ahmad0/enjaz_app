@@ -58,6 +58,8 @@ class ProjectsController extends GetxController{
 
     projectsWithFilter.items=[];
     projects.items.forEach((element) {
+
+      if((element.isWorkManager)||(element.members?.contains(uid)??false))
       if((element.nameProject?.toLowerCase().contains(term.toLowerCase())??false))
         projectsWithFilter.items.add(element);
     });

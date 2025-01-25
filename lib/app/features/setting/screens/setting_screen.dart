@@ -33,6 +33,16 @@ class SettingScreen extends StatelessWidget {
             leading: Icon(Icons.headphones_rounded),
             trailing: Icon(Icons.arrow_forward_ios),
           ),
+          Divider(),
+          ListTile(
+            onTap: (){
+              Get.lazyPut(() => AuthController());
+              AuthController.instance.signOut(context);
+            },
+            title: Text(StringManager.logoutText),
+            leading: Icon(Icons.logout_rounded),
+            trailing: Icon(Icons.arrow_forward_ios),
+          ),
         ],
       ),
     );

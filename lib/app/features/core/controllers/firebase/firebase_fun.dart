@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../../../core/models/image_project.dart';
 import '../../../../../core/models/project_model.dart';
 import '../../../../../core/models/chat_model.dart';
 import '../../../../../core/models/message_model.dart';
@@ -122,11 +123,27 @@ class FirebaseFun {
     return result;
   }
 
+  ///imageProject
+  static addImageProject( {required ImageProject imageProject}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionImageProject)
+        .doc(imageProject.id)
+        .set(imageProject.toJson()).then(onValueAddReport).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+
+  }
+
   ///Report
   static addReportProject( {required ReportProject reportProject}) async {
     final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionReportProject)
         .doc(reportProject.id)
         .set(reportProject.toJson()).then(onValueAddReport).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+
+  }
+  static updateReportProject( {required ReportProject reportProject}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionReportProject).doc(
+        reportProject.id
+    ).update(reportProject.toJson()).then(onValueUpdateReport).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
     return result;
   }
 

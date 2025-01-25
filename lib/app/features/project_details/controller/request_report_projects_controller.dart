@@ -13,17 +13,19 @@ import '../../../../core/widgets/constants_widgets.dart';
 import '../../core/controllers/firebase/firebase_constants.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../core/controllers/firebase/firebase_fun.dart';
 import '../../messages/controller/chat_controller.dart';
 import '../../messages/controller/chat_room_controller.dart';
 import '../../profile/controller/profile_controller.dart';
 
-class ReportProjectsController extends GetxController{
+class RequestReportProjectsController extends GetxController{
 
   final searchController = TextEditingController();
   ReportProjects reportProjects=ReportProjects(items: []);
   ReportProjects reportProjectsWithFilter=ReportProjects(items: []);
   String? uid;
   String? idProject;
+  bool? isWorkManager;
 
   var getReportProjects;
 
@@ -51,7 +53,6 @@ class ReportProjectsController extends GetxController{
     final result= FirebaseFirestore.instance
         .collection(FirebaseConstants.collectionReportProject)
         .where('idProject',isEqualTo: idProject)
-        .where('status',isEqualTo: AccountRequestStatus.Accepted.name)
         .snapshots();
     return result;
   }
@@ -59,12 +60,36 @@ class ReportProjectsController extends GetxController{
 
     reportProjectsWithFilter.items=[];
     reportProjects.items.forEach((element) {
+
       if((element.file?.name?.toLowerCase().contains(term.toLowerCase())??false))
-        reportProjectsWithFilter.items.add(element);
+
+
+        if((isWorkManager??false)&&element.getStatus==null)
+            reportProjectsWithFilter.items.add(element);
+      else if(!(isWorkManager??false)&&element.getStatus!=AccountRequestStatus.Accepted&&element.idUser==uid)
+          reportProjectsWithFilter.items.add(element);
     });
      update();
   }
 
+  acceptOrRejectedRequest(context,{ReportProject? reportProject,String? state}) async {
+    // ConstantsWidgets.showProgress(progress);
+
+    reportProject?.status=state;
+    var result=await FirebaseFun.updateReportProject(reportProject:reportProject!);
+
+    // ConstantsWidgets.closeDialog();
+    if(result['status']){
+      //TODO dd notification
+      // Get.put(NotificationsController()).addNotification(context, notification: NotificationModel(idUser: id,typeUser: AppConstants.collectionWorker
+      //     , subtitle: StringManager.notificationSubTitleNewProblem+' '+(Get.put(ProfileController())?.currentUser.value?.name??''), dateTime: DateTime.now(), title: StringManager.notificationTitleNewProblem, message: ''));
+
+      // Get.back();
+    }
+    else
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+    return result;
+  }
 
 
 }
