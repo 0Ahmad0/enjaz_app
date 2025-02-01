@@ -2,6 +2,8 @@ import 'message_model.dart';
 
 class Chat {
   String id;
+  String? name;
+  String? idGroup;
   List<Message> messages;
   List<String> listIdUser;
   DateTime date;
@@ -10,9 +12,13 @@ class Chat {
     this.id='',
     required this.messages,
     required this.listIdUser,
+     this.name,
+     this.idGroup,
     required this.date,
   });
   factory Chat.fromJson( json){
+    var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
+
     List<Message> listTemp = [];
     // for(int i=1;i<json['messages'].length;i++){
     //   Message tempMessage=Message.fromJson(json['messages'][i]);
@@ -24,6 +30,8 @@ class Chat {
       listTemp2.add(temp);
     return Chat(
       id: json['id'],
+      name: data['name'],
+      idGroup: data['idGroup'],
       listIdUser: listTemp2,
       messages: listTemp,//json["messages"],
       date: json["date"].toDate(),
@@ -38,6 +46,8 @@ class Chat {
     return {
       'id':id,
       'date':date,
+      'name':name,
+      'idGroup':idGroup,
       // 'messages':listTemp,
       'listIdUser':listIdUser,
     };

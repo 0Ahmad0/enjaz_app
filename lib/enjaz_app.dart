@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app/features/messages/screens/messages_screen.dart';
 import 'app/features/project_details/screens/project_details_screen.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
@@ -97,6 +98,7 @@ class EnjazApp extends StatelessWidget {
             onGenerateRoute: appRouter.generateRoute,
             routes: {
               Routes.projectDetailsRoute: (_) => ProjectDetailsScreen(),
+              Routes.messagesRoute: (_) => MessagesScreen(),
             },
           );
         });

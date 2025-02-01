@@ -23,7 +23,7 @@ class ProcessController extends GetxController {
     return "......";
   }
 
-  fetchNameUser(context, {required String idUser}) async {
+  Future<String?> fetchNameUser(context, {required String idUser}) async {
     if (cacheNameUser.containsKey(idUser)) return cacheNameUser[idUser];
     var result = await FirebaseFun.fetchUserUid(
         uid: idUser, typeUser: FirebaseConstants.collectionUser);
@@ -68,7 +68,8 @@ class ProcessController extends GetxController {
   widgetNameUser(context, {required String idUser,TextStyle? style}) {
     // if(cacheNameUser.containsKey(idUser)&&cacheNameUser[idUser]!=null)
     //   return Text('${cacheNameUser[idUser]}');
-    return FutureBuilder(
+    return FutureBuilder<String?>(
+      initialData: fetchLocalNameUser( idUser: idUser) ,
       future: fetchNameUser(context, idUser: idUser),
       builder: (
         context,

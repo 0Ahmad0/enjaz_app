@@ -1,6 +1,10 @@
 import 'dart:ui';
 
 import 'package:animate_do/animate_do.dart';
+import '../../app/features/messages/controller/chat_room_controller.dart';
+import '../../app/features/project_details/controller/report_project_controller.dart';
+import '../enums/enums.dart';
+import '../models/file_model.dart';
 import '/core/helpers/extensions.dart';
 import '/core/helpers/spacing.dart';
 import '/core/utils/color_manager.dart';
@@ -15,8 +19,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class UploadFileDialog extends StatelessWidget {
-  // const DeleteUserDialog({super.key, this.user});
-
+   UploadFileDialog({super.key, this.fileModel});
+final  FileModel? fileModel;
   // final UserModel? user;
 
   @override
@@ -72,6 +76,9 @@ class UploadFileDialog extends StatelessWidget {
                                 child: AppButton(
                               color: ColorManager.successColor,
                               onPressed: () {
+                                context.pop();
+                                Get.put(ReportProjectController()).addReportProjectWithOutFile(context,file: fileModel,idProject: Get.put(ChatRoomController()).chat?.idGroup
+                                ,state:AccountRequestStatus.Accepted.name);
                                 //ToDo : Upload File
                               },
                               text: 'upload',

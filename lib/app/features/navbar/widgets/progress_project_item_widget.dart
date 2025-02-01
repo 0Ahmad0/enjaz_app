@@ -72,8 +72,10 @@ class _ProgressProjectItemWidgetState extends State<ProgressProjectItemWidget> {
               CircularPercentIndicator(
                 radius: 36.sp,
                 lineWidth: 5,
-                percent: widget.item?.progress?.toDouble()??.32,
+                percent: widget.item?.progress?.toDouble()??widget.item?.getProgress??.32,
                 center: Text(
+
+                  "${((widget.item?.progress?.toDouble()??widget.item?.getProgress??.32)*100).toInt()}"??
                   "32",
                   style: StyleManager.font24Bold(),
                 ),

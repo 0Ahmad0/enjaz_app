@@ -19,6 +19,7 @@ import '../../../../core/models/file_model.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../core/controllers/firebase/firebase_constants.dart';
 import '../../core/controllers/firebase/firebase_fun.dart';
+import '../../messages/controller/chat_controller.dart';
 import '../../profile/controller/profile_controller.dart';
 
 
@@ -73,6 +74,7 @@ class ProjectController extends GetxController{
     }
     if((uid?.isNotEmpty??false)&&!(project?.members?.contains(uid)??false))
       project?.members?.add(uid!);
+
     ProjectModel projectModel=ProjectModel(
         id: id,
        urlPhoto:imagePath ,
@@ -90,6 +92,7 @@ class ProjectController extends GetxController{
 
     ConstantsWidgets.closeDialog();
     if(result['status']){
+       Get.put(ChatController()).createChat(listIdUser:project?.members??[],idGroup: id,name: nameProject);
       //TODO dd notification
       // Get.put(NotificationsController()).addNotification(context, notification: NotificationModel(idUser: id,typeUser: AppConstants.collectionWorker
       //     , subtitle: StringManager.notificationSubTitleNewProblem+' '+(Get.put(ProfileController())?.currentUser.value?.name??''), dateTime: DateTime.now(), title: StringManager.notificationTitleNewProblem, message: ''));

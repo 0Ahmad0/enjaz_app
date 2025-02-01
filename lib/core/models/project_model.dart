@@ -43,6 +43,16 @@ class ProjectModel {
     this.assets,
   });
 
+  double get getProgress{
+    double progress=(assets?.length??0)/((members?.length??0)==0?1:members!.length);
+    if(progress>=1){
+      progress=1;
+      if(getState==ProjectStatus.inProgress)
+        progress=0.9;
+    }
+
+    return progress;
+  }
   bool get isWorkManager=>idUser==Get.put(ProfileController()).currentUser?.value?.uid;
   factory ProjectModel.fromJson(json) {
     var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;

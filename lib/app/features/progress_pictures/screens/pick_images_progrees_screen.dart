@@ -60,10 +60,13 @@ class _PickImageProgreesScreenState extends State<PickImageProgreesScreen> {
         leading: CustomBackButton(),
         title: Text(StringManager.progressPictureText),
         actions: [
-          IconButton(
-            onPressed: pickImages,
-            icon: Icon(
-              Icons.add,
+          Visibility(
+            visible: Get.put(ProjectController()).project?.isWorkManager??false,
+            child: IconButton(
+              onPressed: pickImages,
+              icon: Icon(
+                Icons.add,
+              ),
             ),
           ),
         ],

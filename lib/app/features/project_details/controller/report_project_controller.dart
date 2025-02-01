@@ -77,6 +77,42 @@ class ReportProjectController extends GetxController{
     ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
     return result;
   }
+  addReportProjectWithOutFile(context,{FileModel? file,String? idProject,String? state}) async {
+    // ConstantsWidgets.showProgress(progress);
+
+    _calculateProgress(1);
+    Get.dialog(
+      GetBuilder<ReportProjectController>(
+          builder: (ReportProjectController controller) =>
+              ConstantsWidgets.showProgress(controller.currentProgress/controller.fullProgress)
+      ),
+      barrierDismissible: false,
+    );
+
+    String id= '${XFile(file?.localUrl??"").name??""}000000'.substring(0,6)+'${Timestamp.now().microsecondsSinceEpoch}';
+
+    ReportProject reportProject=ReportProject(
+        id: id,
+        idProject:idProject,
+        idUser:uid,
+        file:file,
+        status:state,
+        nameUser: Get.put(ProfileController()).currentUser?.value?.name,
+        dateTime: DateTime.now()
+    );
+    var result=await FirebaseFun.addReportProject(reportProject:reportProject);
+
+    ConstantsWidgets.closeDialog();
+    if(result['status']){
+      //TODO dd notification
+      // Get.put(NotificationsController()).addNotification(context, notification: NotificationModel(idUser: id,typeUser: AppConstants.collectionWorker
+      //     , subtitle: StringManager.notificationSubTitleNewProblem+' '+(Get.put(ProfileController())?.currentUser.value?.name??''), dateTime: DateTime.now(), title: StringManager.notificationTitleNewProblem, message: ''));
+
+      // Get.back();
+    }
+    ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+    return result;
+  }
 
 
   _calculateProgress(int length){

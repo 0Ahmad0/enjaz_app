@@ -16,6 +16,7 @@ import '../../../../core/utils/style_manager.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../core/controllers/firebase/firebase_constants.dart';
 import '../../core/controllers/firebase/firebase_fun.dart';
+import '../../core/controllers/process_controller.dart';
 
 
 class ChatController extends GetxController{
@@ -57,12 +58,21 @@ class ChatController extends GetxController{
     super.dispose();
   }
 
-  createChat({required List<String> listIdUser}) async {
+  createChat({required List<String> listIdUser,String? idGroup,String? name}) async {
     var result=await fetchChatsByListIdUser(listIdUser: listIdUser);
     if(result['status']){
-      if(result['body'].length<=0){
-        result=await FirebaseFun.addChat(chat:
-        Chat(messages: [], listIdUser: listIdUser, date: DateTime.now()));
+      if(result['body'].length<=0||(
+          (idGroup?.isNotEmpty??false)&&
+              !(chats.listChat.any((e)=>e.idGroup?.contains(idGroup??'')??false)
+      ))||(chats.listChat.length>2
+      &&listIdUser.length==2
+      )
+
+      ){
+        result=await FirebaseFun.addChat(
+
+            chat:
+        Chat(messages: [], listIdUser: listIdUser, date: DateTime.now(),idGroup: idGroup,name:name));
         if(result['status'])
           await FirebaseFun.addMessage(message: Message.init(),idChat:result['body']['id'] );
       }
@@ -164,9 +174,13 @@ class ChatController extends GetxController{
             .connectionState ==
             ConnectionState
                 .waiting) {
-          return  Text('جاري التحميل ...'
-          // return  Text('loading ...'
-              ,style: StyleManager.font12Regular(
+          // return  Text(
+              // 'جاري التحميل ...'
+          return  Text('loading ...',
+              overflow: TextOverflow.ellipsis,
+              style: StyleManager.font12SemiBold(
+              // ,style: StyleManager.font12Regular(
+
                   color: ColorManager.hintTextColor));
           // return  Text(tr(LocaleKeys.loading)+' ...');
           //Const.CIRCLE(context);
@@ -182,13 +196,14 @@ class ChatController extends GetxController{
               .hasData) {
 
             Message message =Message.fromJson(snapshot.data);
+
             // Map<String,dynamic> data=snapshot.data as Map<String,dynamic>;
             //homeProvider.sessions=Sessions.fromJson(data['body']);
             return Text(
               '${message.textMessage}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis
-                ,style: StyleManager.font12Regular(
+                ,style: StyleManager.font12SemiBold(
             color: ColorManager.hintTextColor)
             );
           } else {
@@ -223,8 +238,9 @@ class ChatController extends GetxController{
             ConnectionState
                 .waiting) {
           return  Text('${""??"loading ..."}'
-              ,   style: StyleManager.font10Regular(
-                color: ColorManager.blackColor),);
+
+              ,style:    StyleManager.font12Regular(
+                    color: ColorManager.blackColor.withOpacity(.75)));
           // return  Text(tr(LocaleKeys.loading)+' ...');
           //Const.CIRCLE(context);
         } else if (snapshot
@@ -246,8 +262,8 @@ class ChatController extends GetxController{
               DateFormat().add_jm().format(message.sendingTime??DateTime.now()),
               maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-              style: StyleManager.font10Regular(
-                  color: ColorManager.blackColor),
+                style:    StyleManager.font12Regular(
+            color: ColorManager.blackColor.withOpacity(.75)),
             );
           } else {
             return  Text(
@@ -299,14 +315,17 @@ class ChatController extends GetxController{
     ConstantsWidgets.showLoading();
     var result =await FirebaseFun
         .deleteChat(idChat: idChat);
+    ConstantsWidgets.closeDialog();
     if(result['status']){
+
+      ConstantsWidgets.closeDialog();
     // PersonModel? person=Get.put(HomePersonsController()).persons.items.where((element)=>element.idChat==idChat).firstOrNull;
     // if(person!=null){
     //   person.idChat=null;
     //   await FirebaseFun.updatePerson(person:person!);
     // }
     }
-    ConstantsWidgets.closeDialog();
+    // ConstantsWidgets.closeDialog();
     //ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
@@ -350,8 +369,15 @@ class ChatController extends GetxController{
 
     chatsWithFilter.listChat=[];
     chats.listChat.forEach((element) {
+      final List<UserModel?> users=element.listIdUser.map((e)=>Get.put(ProcessController()).fetchLocalUser(idUser: e)).toList();
+      final isFoundUser=users.any((e)=>
+      (e?.name?.toLowerCase().contains(term.toLowerCase())??false)
+      ||(e?.email?.toLowerCase().contains(term.toLowerCase())??false)
+      );
 
-      if((element.id?.toLowerCase().contains(term.toLowerCase())??false))
+      if((element.id?.toLowerCase().contains(term.toLowerCase())??false)
+      ||isFoundUser
+      )
         chatsWithFilter.listChat.add(element);
     });
     update();

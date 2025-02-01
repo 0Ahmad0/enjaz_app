@@ -30,6 +30,7 @@ class ChatRoomController extends GetxController{
     if(Get.arguments?["chat"] is Chat?){
       // chat=Get.arguments?["chat"];
     }
+    messageController.clear();
     waitMessage.clear();
     currentUserId=FirebaseAuth.instance.currentUser?.uid ?? '';
     recId=getIdUserOtherFromList( chat?.listIdUser??[]);

@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
+import 'app/features/core/controllers/connection_time.dart';
 import 'core/routing/routes.dart';
 import 'core/utils/const_value_manager.dart';
 
@@ -29,6 +30,11 @@ Future<void> main() async {
 
 
   await GetStorage.init();
+
+  /// for show last connection
+  ConnectionTime.instance.connectTime();
+
+
   await FlutterDownloader.initialize(
       debug: true,
       ignoreSsl: true
