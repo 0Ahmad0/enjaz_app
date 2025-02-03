@@ -21,6 +21,8 @@ class AuthController extends GetxController {
   static AuthController get instance => Get.find();
 
   //controllers
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
@@ -30,6 +32,8 @@ class AuthController extends GetxController {
   init() {
     formKey = GlobalKey<FormState>();
     nameController.clear();
+    firstNameController.clear();
+    lastNameController.clear();
     emailController.clear();
     phoneController.clear();
     passwordController.clear();
@@ -192,7 +196,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> signUp(BuildContext context) async {
-    String name = nameController.value.text;
+    String name = firstNameController.value.text+" "+lastNameController.value.text;
+    String userName = nameController.value.text;
     String email = emailController.value.text;
     String phoneNumber = phoneController.value.text;
     // String password = passwordController.value.text;
@@ -213,7 +218,7 @@ class AuthController extends GetxController {
           email: email,
           name: name,
           phoneNumber: phoneNumber,
-          // userName: userName,
+          userName: userName,
           password: password,
           typeUser: typeUser,
           photoUrl: '');
@@ -354,6 +359,8 @@ class AuthController extends GetxController {
   @override
   void onClose() {
     nameController.dispose();
+    firstNameController.dispose();
+    firstNameController.dispose();
     emailController.dispose();
     phoneController.dispose();
     passwordController.dispose();
