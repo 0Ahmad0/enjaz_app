@@ -1,6 +1,7 @@
 import 'package:enjaz_app/app/features/auth/screens/login_screen.dart';
 import 'package:enjaz_app/app/features/auth/screens/sign_up_screen.dart';
 import 'package:enjaz_app/app/features/navbar/screens/navbar_screen.dart';
+import 'package:enjaz_app/app/features/profile/controller/profile_controller.dart';
 import 'package:enjaz_app/app/features/splash/splash_screen.dart';
 import 'package:enjaz_app/core/helpers/extensions.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class EnjazApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.put(ProfileController());
     return ScreenUtilInit(
         minTextAdapt: true,
         designSize: const Size(
