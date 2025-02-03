@@ -104,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 
                       ),
                       icon: Icon(Icons.keyboard_arrow_down,),
-                        items: [1, 2, 3].map((e) =>
+                        items: ["Worker","Engineer"].map((e) =>
                             DropdownMenuItem(
                                 child: Text(e.toString(),),
                               value: e.toString(),
@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               verticalSpace(8.h),
                               AppTextField(
                                 // iconData: AssetsManager.usernameIcon,
-                                controller: authController.nameController,
+                                controller: authController.firstNameController,
                                 validator: (value) =>
                                     authController.validateFullName(value ?? ''),
                                 hintText: StringManager.enterHereToTypeText,
@@ -143,9 +143,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               verticalSpace(8.h),
                               AppTextField(
                                 // iconData: AssetsManager.usernameIcon,
-                                controller: authController.emailController,
+                                controller: authController.lastNameController,
                                 validator: (value) =>
-                                    authController.validateEmail(value ?? ''),
+                                    authController.validateFullName(value ?? ''),
                                 hintText: StringManager.enterHereToTypeText,
                               ),
                             ],
@@ -159,9 +159,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     verticalSpace(8.h),
                     AppTextField(
                       // iconData: AssetsManager.usernameIcon,
-                      controller: authController.phoneController,
+                      controller: authController.nameController,
                       validator: (value) =>
-                          authController.validatePhoneNumber(value ?? ''),
+                          authController.validateFullName(value ?? ''),
                       hintText: StringManager.enterHereToTypeText,
                     ),
                     verticalSpace(10.h),
@@ -170,9 +170,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     verticalSpace(8.h),
                     AppTextField(
                       // iconData: AssetsManager.usernameIcon,
-                      controller: authController.phoneController,
+                      controller: authController.emailController,
                       validator: (value) =>
-                          authController.validatePhoneNumber(value ?? ''),
+                          authController.validateEmail(value ?? ''),
                       hintText: StringManager.enterHereToTypeText,
                     ),
                     verticalSpace(10.h),
