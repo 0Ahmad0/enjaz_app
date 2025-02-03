@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "362083144834",
-    "project_id": "enjaz-2025",
-    "storage_bucket": "enjaz-2025.firebasestorage.app"
+    "project_number": "1006222441749",
+    "project_id": "enjaz-app-9d39e",
+    "storage_bucket": "enjaz-app-9d39e.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:362083144834:android:da6f32c3fcb8deaa97109b",
+        "mobilesdk_app_id": "1:1006222441749:android:0c28360270b35cfc1fbd1c",
         "android_client_info": {
           "package_name": "com.example.enjaz_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCfsy570dM9nLbQ44a1_vhFRSlz7IHEmx8"
+          "current_key": "AIzaSyB3DrpAuaXzyAS5kfdWVswBfFwWlR7Iy-4"
         }
       ],
       "services": {
