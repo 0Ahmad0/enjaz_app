@@ -1,3 +1,6 @@
+
+import 'dart:math';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:enjaz_app/app/features/auth/screens/change_password_screen.dart';
 import 'package:enjaz_app/core/helpers/spacing.dart';
@@ -117,7 +120,7 @@ class DetailsScreen extends StatelessWidget {
                       )+ ' - '
                     ),
                     TextSpan(
-                      text: '${32} Day',
+                      text: '${ ((project?.endDate?.difference(DateTime.now()).inDays?? 65)/(Random().nextInt(2)+1)).toInt()} Day',
                       style: StyleManager.font14Regular(
                         color: ColorManager.errorColor
                       )

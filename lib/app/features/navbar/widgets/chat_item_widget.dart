@@ -28,7 +28,7 @@ final Chat? item;
   Widget build(BuildContext context) {
 
     String? idUser=(controller.currentUserId.contains(item?.listIdUser[0]??''))
-        ?item?.listIdUser[1]
+        ?item?.listIdUser.elementAtOrNull(1)
         :item?.listIdUser[0];
     return InkWell(
       onTap: (){
