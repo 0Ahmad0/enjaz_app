@@ -19,6 +19,7 @@ class AssetsManager {
   static const  fileDownloadIcon = '$_pathSVGs/file_download.svg';
   static const  dateIcon = '$_pathSVGs/date.svg';
   static const  bookmarkIcon = '$_pathSVGs/bookmark.svg';
+  static const  mailBoxIMG = '$_pathJsons/mail_box.json';
 
   ///<==== Json ====>
 

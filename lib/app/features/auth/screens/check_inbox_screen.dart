@@ -25,7 +25,7 @@ class CheckInboxScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Lottie.asset(
-                  'AssetsManager.mailBoxIMG',
+                  AssetsManager.mailBoxIMG,
                   fit: BoxFit.cover,
                   width: 200.w,
                   height: 200.h

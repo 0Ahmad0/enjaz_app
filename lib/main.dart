@@ -34,8 +34,8 @@ Future<void> main() async {
       debug: true,
       ignoreSsl: true
   );
-  await requestAllPermissions();
 
+  await requestAllPermissions();
 
   /// To Init Firebase
   await Firebase.initializeApp(
