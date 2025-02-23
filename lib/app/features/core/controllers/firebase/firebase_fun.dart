@@ -312,6 +312,117 @@ class FirebaseFun {
   // }
   //
 
+  static  Future<void> deleteAllData() async {
+    await deleteAuthUsers();      // حذف جميع المستخدمين من Authentication
+    await deleteAllFirestoreData();  // حذف جميع بيانات Firestore
+    await deleteAllStorageFiles();   // حذف جميع الملفات من Storage
+
+    print("✅ تم حذف جميع البيانات بنجاح!");
+  }
+
+  static Future<void> deleteAuthUsers() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      // جلب جميع المستخدمين من مجموعة "users" في Firestore
+      final usersSnapshot = await firestore.collection(FirebaseConstants.collectionUser).get();
+
+      for (var doc in usersSnapshot.docs) {
+        String email = doc['email'];
+        String password = doc['password'];
+
+        try {
+          // تسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور
+          UserCredential userCredential = await auth.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
+
+
+          await userCredential.user?.delete();
+
+          await firestore.collection(FirebaseConstants.collectionUser).doc(doc.id).delete();
+
+          print("✅ تم حذف المستخدم: $email بنجاح!");
+        } catch (e) {
+          print("❌ فشل حذف المستخدم: $email - $e");
+        }
+      }
+
+      print("✅ تم حذف جميع المستخدمين بنجاح!");
+    } catch (e) {
+      print("❌ فشل حذف جميع المستخدمين: $e");
+    }
+  }
+
+  static Future<void> deleteAllFirestoreData() async {
+    final firestore = FirebaseFirestore.instance;
+
+    try {
+      final collections = [
+        FirebaseConstants.collectionUser,
+        FirebaseConstants.collectionAppointment,
+        FirebaseConstants.collectionNotification,
+        FirebaseConstants.collectionReport,
+        FirebaseConstants.collectionChat,
+        FirebaseConstants.collectionReportProject,
+        FirebaseConstants.collectionImageProject,
+        FirebaseConstants.collectionProject,
+        // FirebaseConstants.collectionMessage,
+        FirebaseConstants.collectionNotification,
+      ];
+
+      for (var collectionName in collections) {
+
+        final snapshot = await firestore.collection(collectionName).get();
+
+        for (var doc in snapshot.docs) {
+          await doc.reference.delete();
+        }
+        print("✅ تم حذف جميع المستندات من الـ collection: $collectionName");
+      }
+
+      print("✅ تم حذف جميع بيانات Firestore بنجاح!");
+    } catch (e) {
+      print("❌ فشل حذف بيانات Firestore: $e");
+    }
+  }
+
+
+  static Future<void> getFilesFromFolder(Reference folderRef,int state) async {
+    final ListResult result = await folderRef.listAll();
+    if(state!=0)
+      for (var item in result.items) {
+        // print('File: ${item.fullPath}');
+        await item.delete();
+      }
+
+    for (var prefix in result.prefixes) {
+      // المجلدات الفرعية
+      getFilesFromFolder(prefix,state+1);
+    }
+  }
+  static Future<void> deleteAllStorageFiles() async {
+    final storage = FirebaseStorage.instance;
+
+    try {
+      final storageRef = storage.ref();
+      final ListResult storageFiles = await storageRef.listAll();
+      // print(storageFiles.items.length);
+      // for (var file in storageFiles.items) {
+      //   print(file.name);
+      //   // await file.delete();
+      // }
+      getFilesFromFolder(storageRef,0);
+
+      print("✅ تم حذف جميع الملفات من Storage بنجاح!");
+    } catch (e) {
+      print("❌ فشل حذف الملفات من Storage: $e");
+    }
+  }
+
+
 
 
   static Future<Map<String,dynamic>>  onError(error) async {

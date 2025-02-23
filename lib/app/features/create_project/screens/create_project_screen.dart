@@ -29,6 +29,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/models/location_model.dart';
 import '../../auth/controller/auth_controller.dart';
+import '../../core/controllers/fab_controller.dart';
 import '../../core/controllers/process_controller.dart';
 
 class CreateProjectScreen extends StatefulWidget {
@@ -514,7 +515,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                 alignment: AlignmentDirectional.centerEnd,
                 child: InkWell(
                   onTap: () {
-
+                    if(showDemoRejectMessage()) return;
                     _addProject(context);
                   },
                   child: AppPaddingWidget(

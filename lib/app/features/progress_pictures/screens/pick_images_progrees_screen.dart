@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/models/image_project.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../../../core/widgets/no_data_found_widget.dart';
+import '../../core/controllers/fab_controller.dart';
 import '../../core/controllers/process_controller.dart';
 import '../../create_project/controller/project_controller.dart';
 import '../controller/progress_projects_controller.dart';
@@ -31,7 +32,7 @@ class _PickImageProgreesScreenState extends State<PickImageProgreesScreen> {
   Future<void> pickImages() async {
     final List<XFile>? images = await _picker.pickMultiImage();
     if (images != null) {
-
+      if(showDemoRejectMessage()) return;
       await Get.put(ImageProjectController()).addImageProject(context,idProject:  controller.idProject ,files:images );
       // setState(() {
       //   String today = DateTime.now().toIso8601String().split('T')[0];

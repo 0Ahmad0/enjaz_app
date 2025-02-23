@@ -1,6 +1,9 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:enjaz_app/app/features/auth/screens/widgets/fab_widget.dart';
 import 'package:enjaz_app/core/utils/assets_manager.dart';
+import 'package:showcaseview/showcaseview.dart';
 
+import '../../core/controllers/fab_controller.dart';
 import '../controller/auth_controller.dart';
 import '/core/helpers/extensions.dart';
 import '/core/helpers/spacing.dart';
@@ -36,99 +39,113 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // final authController = Get.put(AuthController());
     // authController.init();
-    return Scaffold(
-      body: SafeArea(
-        child: AppPaddingWidget(
-          child: Form(
-            key: authController.formKey,
-            child: SingleChildScrollView(
-              child: FadeInLeft(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpace(20.h),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        AssetsManager.logoIMG,
-                        width: 200.w,
-                        height: 200.h,
-                      ),
-                    ),
-                    verticalSpace(60.h),
-                    AppTextField(
-                      iconData: AssetsManager.usernameIcon,
-                      controller:  authController.emailController,
-                      hintText: StringManager.enterEmailHintText,
-                      validator: (value)=>authController.validateEmail(value??'')
-                    ),
-                    verticalSpace(20.h),
-                    AppTextField(
-                      controller: authController.passwordController,
-                      obscureText: true,
-                      suffixIcon: true,
-                      iconData: AssetsManager.lockIcon,
-                      validator: (value)=>authController.validatePassword(value??''),
-                      hintText: StringManager.enterPasswordHintText,
-                    ),
-                    verticalSpace(20.h),
-                    AppButton(
-                      onPressed: () async {
-                        // context.pushReplacement(Routes.navbarRoute);
-                        // await authController.seeder();
-                        // context.pushReplacement(Routes.navbarRoute);
-                        if (authController.formKey.currentState!.validate()) {
-                        authController.login(context);
-                        }
-                      },
-                      text: StringManager.loginText,
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero
+    final GlobalKey _fabKey = GlobalKey();
+    return ShowCaseWidget(
+        builder:  (context) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if(Get.put(FabController()).checkIsFirst("FabWidget"))
+              ShowCaseWidget.of(context)?.startShowCase([_fabKey]);
+          });
+          return Scaffold(
+          body: SafeArea(
+            child: AppPaddingWidget(
+              child: Form(
+                key: authController.formKey,
+                child: SingleChildScrollView(
+                  child: FadeInLeft(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        verticalSpace(20.h),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            AssetsManager.logoIMG,
+                            width: 200.w,
+                            height: 200.h,
+                          ),
                         ),
-                        onPressed: () {
-                          context.pushNamed(Routes.forgotPasswordRoute);
-                        },
-                        child: Text(
-                          StringManager.forgotPasswordLoginText,
-                          style: StyleManager.font14Regular(),
+                        verticalSpace(60.h),
+                        AppTextField(
+                          iconData: AssetsManager.usernameIcon,
+                          controller:  authController.emailController,
+                          hintText: StringManager.enterEmailHintText,
+                          validator: (value)=>authController.validateEmail(value??'')
                         ),
-                      ),
-                    ),
-                    verticalSpace(220.h),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text.rich(
-                        TextSpan(children: [
-                          TextSpan(
-                            text: StringManager.doNotHaveAnAccountText + " ",
-                            style: StyleManager.font14Bold(
-                              color: ColorManager.blackColor,
+                        verticalSpace(20.h),
+                        AppTextField(
+                          controller: authController.passwordController,
+                          obscureText: true,
+                          suffixIcon: true,
+                          iconData: AssetsManager.lockIcon,
+                          validator: (value)=>authController.validatePassword(value??''),
+                          hintText: StringManager.enterPasswordHintText,
+                        ),
+                        verticalSpace(20.h),
+                        AppButton(
+                          onPressed: () async {
+                            // context.pushReplacement(Routes.navbarRoute);
+                            // await authController.seeder();
+                            // context.pushReplacement(Routes.navbarRoute);
+                            if (authController.formKey.currentState!.validate()) {
+                            authController.login(context);
+                            }
+                          },
+                          text: StringManager.loginText,
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero
+                            ),
+                            onPressed: () {
+                              context.pushNamed(Routes.forgotPasswordRoute);
+                            },
+                            child: Text(
+                              StringManager.forgotPasswordLoginText,
+                              style: StyleManager.font14Regular(),
                             ),
                           ),
-                          TextSpan(
-                              text: StringManager.createAccountNowText,
-                              style: StyleManager.font14Regular(
-                                color: ColorManager.blueColor,
+                        ),
+                        verticalSpace(220.h),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text.rich(
+                            TextSpan(children: [
+                              TextSpan(
+                                text: StringManager.doNotHaveAnAccountText + " ",
+                                style: StyleManager.font14Bold(
+                                  color: ColorManager.blackColor,
+                                ),
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  context.pushReplacement(Routes.signUpRoute);
-                                }),
-                        ]),
-                      ),
-                    )
+                              TextSpan(
+                                  text: StringManager.createAccountNowText,
+                                  style: StyleManager.font14Regular(
+                                    color: ColorManager.blueColor,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      context.pushReplacement(Routes.signUpRoute);
+                                    }),
+                            ]),
+                          ),
+                        )
 
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ), floatingActionButton: Showcase(
+          key: _fabKey,
+          description: "Click here for quick access",
+          // description: "اضغط هنا للوصول السريع",
+          child: FabWidget(),
         ),
-      ),
+        );
+      }
     );
   }
 }

@@ -22,6 +22,7 @@ import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/const_value_manager.dart';
 import '../../../../core/utils/style_manager.dart';
 import '../../../../core/widgets/app_padding.dart';
+import '../../core/controllers/fab_controller.dart';
 import '../../create_project/controller/project_controller.dart';
 import '../../progress_pictures/screens/pick_images_progrees_screen.dart';
 import '../controller/report_project_controller.dart';
@@ -63,6 +64,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
 
             );
 
+            if(showDemoRejectMessage()) return;
             if (result != null) {
               final files = result.paths.map((path) => File(path!)).toList();
               FileModel fileModel=FileModel(

@@ -23,6 +23,7 @@ import '../../../../core/helpers/operation_file.dart';
 import '../../../../core/models/message_model.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../../../core/widgets/image_user_provider.dart';
+import '../../core/controllers/fab_controller.dart';
 import '../../core/controllers/process_controller.dart';
 import '../controller/chat_controller.dart';
 import '../controller/chat_room_controller.dart';
@@ -82,6 +83,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 onTap: (){
+                  if(showDemoRejectMessage()) return;
                   Get.put(ChatController()).deleteChat(context, idChat: controller.chat?.id??'');
                   // context.pop();
                 },
@@ -254,6 +256,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     );
   }
   pickerFiles() async {
+    if(showDemoRejectMessage()) return;
     final file = FilePicker.platform;
     FilePickerResult? filePickerResult= await file.pickFiles(allowMultiple:true,
       type: FileType.custom, // لتحديد نوع مخصص من الملفات
@@ -281,6 +284,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     }
   }
   sendText() async {
+    if(showDemoRejectMessage()) return;
     print("object");
     if (controller.messageController.value.text.trim().isNotEmpty) {
       String message = controller.messageController.value.text;

@@ -23,6 +23,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../core/dialogs/delete_dialog.dart';
 import '../../../../core/dialogs/general_dialog.dart';
 import '../../../../core/helpers/launcher_helper.dart';
+import '../../core/controllers/fab_controller.dart';
 import '../controller/request_report_projects_controller.dart';
 import 'assets_details_box_widget.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -192,6 +193,7 @@ class _RequestReportsItemWidgetState extends State<RequestReportsItemWidget> {
                             subTitle: StringManager.areYouSureApprovedRequestText,
                             onOkTap: () {
                               context.pop();
+                              if(showDemoRejectMessage()) return;
                               Get.put(RequestReportProjectsController()).acceptOrRejectedRequest(context,reportProject:widget.item, state:AccountRequestStatus.Accepted.name, );
                             },
                           ),
@@ -229,6 +231,7 @@ class _RequestReportsItemWidgetState extends State<RequestReportsItemWidget> {
                             subTitle: StringManager.areYouSureRejectRequestText,
                             onDeleteTap: () {
                               context.pop();
+                              if(showDemoRejectMessage()) return;
                               Get.put(RequestReportProjectsController()).acceptOrRejectedRequest(context,reportProject:widget.item, state:AccountRequestStatus.Rejected.name, );
                             },
                           ),

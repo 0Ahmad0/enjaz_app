@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../core/controllers/fab_controller.dart';
 import '/app/features/auth/controller/auth_controller.dart';
 import '/app/features/profile/widgets/pick_source_widget.dart';
 import '/core/helpers/extensions.dart';
@@ -58,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //   const SnackBar(content: Text(StringManager.profileUpdateSuccessFullText)),
     // );
     if (formKey.currentState!.validate()) {
+      if(showDemoRejectMessage()) return;
       await  profileController.updateUser();
       setState(() {});
     }

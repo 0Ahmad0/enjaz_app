@@ -75,13 +75,14 @@ class UserModel {
         'photoUrl': photoUrl,
         'typeUser': typeUser,
         // 'gender': gender,
-    'password': password==null?null:BCrypt.hashpw(password!, BCrypt.gensalt()),
+    // 'password': password==null?null:BCrypt.hashpw(password!, BCrypt.gensalt()),
     // 'state':state,
-    // 'password': password,
+    'password': password,
       };
   /// Function to check if the password matches the hashed password
   bool checkPassword(String plainPassword) {
-    return BCrypt.checkpw(plainPassword, password??'');
+    return plainPassword==password;
+    // return BCrypt.checkpw(plainPassword, password??'');
   }
 }
 
